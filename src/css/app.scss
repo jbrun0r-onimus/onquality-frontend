@@ -1,0 +1,30 @@
+@import './helpers.scss';
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('assets/fonts/Montserrat-VariableFont_wght.ttf');
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #f5f5f5 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 8px;
+}
+
+.body--dark ::-webkit-scrollbar-track {
+  background-color: #121212 !important;
+}

@@ -1,0 +1,11 @@
+services:
+  onquality-front:
+    build:
+      context: .
+      target: 'dependencies'
+    ports:
+      - '${APP_PORT:-8080}:9000'
+    volumes:
+      - '.:/app'
+      - /app/node_modules
+    command: yarn dev

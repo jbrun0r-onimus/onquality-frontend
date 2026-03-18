@@ -1,0 +1,215 @@
+<template>
+  <app-dialog
+    ref="dialogRef"
+    :title="title"
+    @hide="onDialogHide"
+    full-width
+    style="max-width: 900px"
+  >
+    <q-form @submit="onSubmit" greedy>
+      <div class="relative-position">
+        <card-page-section>
+          <!-- Header fields -->
+          <div class="row q-col-gutter-md q-mb-md">
+            <date-field
+              class="col-12 col-sm-6"
+              :label="$t('pop.cleaningEfficiency.fields.executionDate')"
+              v-bind="formBinds.execution_date"
+              :readonly="readonly"
+            />
+          </div>
+
+          <!-- Questions table -->
+          <div class="text-subtitle2 q-mb-sm">{{ $t('pop.common.conditions') }}</div>
+          <q-markup-table flat bordered dense>
+            <thead>
+              <tr>
+                <th class="text-left" style="width: 70%">{{ $t('pop.common.condition') }}</th>
+                <th class="text-center" style="width: 10%">{{ $t('pop.common.sim') }}</th>
+                <th class="text-center" style="width: 10%">{{ $t('pop.common.nao') }}</th>
+                <th class="text-center" style="width: 10%">{{ $t('pop.common.na') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="q in questions" :key="q.key">
+                <td class="text-left text-body2" style="white-space: normal">{{ q.label }}</td>
+                <td class="text-center">
+                  <q-radio
+                    :model-value="(formBinds as any)[q.key].modelValue"
+                    @update:model-value="(v: any) => setFieldValue(q.key as any, v)"
+                    :val="true"
+                    :disable="readonly"
+                  />
+                </td>
+                <td class="text-center">
+                  <q-radio
+                    :model-value="(formBinds as any)[q.key].modelValue"
+                    @update:model-value="(v: any) => setFieldValue(q.key as any, v)"
+                    :val="false"
+                    :disable="readonly"
+                  />
+                </td>
+                <td class="text-center">
+                  <q-radio
+                    :model-value="(formBinds as any)[q.key].modelValue"
+                    @update:model-value="(v: any) => setFieldValue(q.key as any, v)"
+                    :val="null"
+                    :disable="readonly"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+
+          <!-- Note field -->
+          <div class="row q-col-gutter-md q-mt-md">
+            <text-field
+              class="col-12"
+              type="textarea"
+              :label="$t('pop.cleaningEfficiency.fields.note')"
+              v-bind="formBinds.note"
+              :readonly="readonly"
+              autogrow
+            />
+          </div>
+        </card-page-section>
+
+        <spinner-and-retry
+          v-if="isFillLoading || fillError"
+          :loading="isFillLoading"
+          :error="fillError"
+          :retry="fillRefetch"
+          spinner-size="64px"
+          overlay
+        />
+      </div>
+
+      <q-card-actions align="right">
+        <app-button
+          color="grey-6"
+          outline
+          :label="readonly ? $t('common.actions.goBack') : $t('common.actions.cancel')"
+          @click="onDialogCancel"
+        />
+        <app-button
+          v-if="readonly && props.item"
+          icon="o_picture_as_pdf"
+          color="red-7"
+          :label="$t('pop.common.exportPdf')"
+          @click="openPrintWindow('cleaning-efficiency', props.item.id)"
+        />
+        <app-button
+          v-if="!readonly"
+          type="submit"
+          color="positive"
+          :label="$t('common.actions.confirm')"
+          :loading="isLoadingMutation"
+        />
+      </q-card-actions>
+    </q-form>
+  </app-dialog>
+</template>
+
+<script setup lang="ts">
+import { computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useDialogPluginComponent } from 'quasar';
+import { useMutation, useQueryClient } from '@tanstack/vue-query';
+import { useAppForm } from 'src/composables/form.composables';
+import {
+  cleaningEfficiencyFormSchema,
+  CleaningEfficiencyForm,
+  CleaningEfficiencyListItem,
+} from 'src/schemas/pop/cleaningEfficiency.schemas';
+import {
+  createCleaningEfficiency,
+  updateCleaningEfficiency,
+  cleaningEfficiencyDetailQuery,
+  cleaningEfficienciesQuery,
+} from 'src/services/pop/cleaningEfficiency.service';
+import { useFillFormQuery } from 'src/composables/query.composables';
+import { showSuccessFeedback } from 'src/helpers/feedback.helpers';
+import AppDialog from 'src/components/layout/AppDialog.vue';
+import CardPageSection from 'src/components/layout/CardPageSection.vue';
+import TextField from 'src/components/form/TextField.vue';
+import DateField from 'src/components/form/DateField.vue';
+import AppButton from 'src/components/misc/AppButton';
+import SpinnerAndRetry from 'src/components/misc/SpinnerAndRetry.vue';
+
+const props = defineProps<{
+  item?: CleaningEfficiencyListItem;
+  readonly?: boolean;
+}>();
+
+defineEmits([...useDialogPluginComponent.emits]);
+
+const { t } = useI18n();
+const queryClient = useQueryClient();
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent();
+
+const { defineAllAppComponentBinds, handleSubmit, setValues, setFieldValue } = useAppForm(
+  cleaningEfficiencyFormSchema
+);
+const formBinds = defineAllAppComponentBinds();
+
+const title = computed(() => {
+  if (props.readonly) return t('pop.cleaningEfficiency.titles.details');
+  return props.item ? t('pop.cleaningEfficiency.titles.edit') : t('pop.cleaningEfficiency.titles.new');
+});
+
+const questions = [
+  { key: 'question1', label: t('pop.cleaningEfficiency.questions.q1') },
+  { key: 'question2', label: t('pop.cleaningEfficiency.questions.q2') },
+  { key: 'question3', label: t('pop.cleaningEfficiency.questions.q3') },
+  { key: 'question4', label: t('pop.cleaningEfficiency.questions.q4') },
+  { key: 'question5', label: t('pop.cleaningEfficiency.questions.q5') },
+  { key: 'question6', label: t('pop.cleaningEfficiency.questions.q6') },
+  { key: 'question7', label: t('pop.cleaningEfficiency.questions.q7') },
+  { key: 'question8', label: t('pop.cleaningEfficiency.questions.q8') },
+  { key: 'question9', label: t('pop.cleaningEfficiency.questions.q9') },
+  { key: 'question10', label: t('pop.cleaningEfficiency.questions.q10') },
+  { key: 'question11', label: t('pop.cleaningEfficiency.questions.q11') },
+  { key: 'question12', label: t('pop.cleaningEfficiency.questions.q12') },
+];
+
+const { mutate, isLoading: isLoadingMutation } = useMutation(
+  (data: CleaningEfficiencyForm) => {
+    if (props.item) return updateCleaningEfficiency(props.item.id, data);
+    return createCleaningEfficiency(data);
+  },
+  {
+    onSuccess: () => {
+      onDialogOK();
+      showSuccessFeedback(
+        props.item
+          ? t('pop.cleaningEfficiency.feedback.updated')
+          : t('pop.cleaningEfficiency.feedback.created')
+      );
+      queryClient.invalidateQueries([cleaningEfficienciesQuery.name]);
+      if (props.item)
+        queryClient.invalidateQueries([cleaningEfficiencyDetailQuery.name, props.item.id]);
+    },
+  }
+);
+
+const { fillRefetch, isFillLoading, fillError } = useFillFormQuery({
+  query: cleaningEfficiencyDetailQuery,
+  id: computed(() => props.item?.id),
+  readonly: props.readonly,
+  setValues,
+  onNotFound: onDialogCancel,
+});
+
+watch(
+  () => props.item,
+  (item) => { if (item) setValues(item as Partial<CleaningEfficiencyForm>, false); },
+  { immediate: true }
+);
+
+const onSubmit = handleSubmit((data) => mutate(data));
+
+function openPrintWindow(route: string, id: number) {
+  const url = `${window.location.origin}${window.location.pathname}#/pop/print/${route}/${id}`;
+  window.open(url, '_blank');
+}
+</script>
