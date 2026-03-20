@@ -51,7 +51,8 @@ export const pop = {
       q19: 'As embalagens estão íntegras e sem sinais de fraude?',
     },
     misc: {
-      deleteConfirmation: 'Você tem certeza que deseja excluir a inspeção do motorista "{driver}"?',
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir a inspeção do motorista "{driver}"?',
     },
     feedback: {
       created: 'Inspeção de carga criada com sucesso.',
@@ -84,7 +85,8 @@ export const pop = {
       q4: 'Condições higiênicas do transporte',
     },
     misc: {
-      deleteConfirmation: 'Você tem certeza que deseja excluir o recebimento do fornecedor "{supplier}"?',
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir o recebimento do fornecedor "{supplier}"?',
     },
     feedback: {
       created: 'Recebimento criado com sucesso.',
@@ -118,7 +120,8 @@ export const pop = {
       bins: 'Lixeiras',
     },
     misc: {
-      deleteConfirmation: 'Você tem certeza que deseja excluir este registro de "{location}"?',
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de "{location}"?',
     },
     feedback: {
       created: 'Registro de limpeza criado com sucesso.',
@@ -140,7 +143,8 @@ export const pop = {
       isCleaning: 'Limpeza Realizada',
     },
     misc: {
-      deleteConfirmation: 'Você tem certeza que deseja excluir este registro de "{equipment}"?',
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de "{equipment}"?',
     },
     feedback: {
       created: 'Registro de limpeza criado com sucesso.',
@@ -179,7 +183,8 @@ export const pop = {
       q17: 'Os funcionários não usam perfume que possa transmitir aos produtos?',
     },
     misc: {
-      deleteConfirmation: 'Você tem certeza que deseja excluir este check-list?',
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este check-list?',
     },
     feedback: {
       created: 'Check-list criado com sucesso.',
@@ -200,12 +205,273 @@ export const pop = {
       isPresent: 'Presente',
     },
     misc: {
-      deleteConfirmation: 'Você tem certeza que deseja excluir o registro de "{name}"?',
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir o registro de "{name}"?',
     },
     feedback: {
       created: 'Registro criado com sucesso.',
       updated: 'Registro atualizado com sucesso.',
       deleted: 'Registro excluído com sucesso.',
+    },
+  },
+  waterCoolerSanitization: {
+    titles: {
+      list: 'Higienização do Bebedouro',
+      details: 'Detalhes da Higienização',
+      new: 'Nova Higienização',
+      edit: 'Editar Higienização',
+      delete: 'Excluir Higienização',
+    },
+    fields: {
+      executionDate: 'Data',
+      employeeSignature: 'Assinatura do Responsável',
+      note: 'Observações',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de higienização?',
+    },
+    feedback: {
+      created: 'Higienização registrada com sucesso.',
+      updated: 'Higienização atualizada com sucesso.',
+      deleted: 'Higienização excluída com sucesso.',
+    },
+  },
+  changeWaterCoolerFilter: {
+    titles: {
+      list: 'Troca do Filtro do Bebedouro',
+      details: 'Detalhes da Troca de Filtro',
+      new: 'Nova Troca de Filtro',
+      edit: 'Editar Troca de Filtro',
+      delete: 'Excluir Troca de Filtro',
+    },
+    fields: {
+      executionDate: 'Data',
+      employeeSignature: 'Assinatura do Responsável',
+      note: 'Observações',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de troca de filtro?',
+    },
+    feedback: {
+      created: 'Troca de filtro registrada com sucesso.',
+      updated: 'Troca de filtro atualizada com sucesso.',
+      deleted: 'Troca de filtro excluída com sucesso.',
+    },
+  },
+  sanitizationControl: {
+    titles: {
+      list: 'Controle de Higienização das Caixas',
+      details: 'Detalhes do Controle',
+      new: 'Novo Controle de Higienização',
+      edit: 'Editar Controle',
+      delete: 'Excluir Controle',
+    },
+    fields: {
+      boxNumber: 'Caixa',
+      executionDate: 'Data da Higienização',
+      nextExecutionDate: 'Próxima Higienização',
+      employeeName: 'Executado por',
+      boxOption1: 'Caixa 1 - Água usada pela peletizadora',
+      boxOption2: 'Caixa 2 - Água usada na copa, sala de apoio e banheiro',
+    },
+    questions: {
+      q1: 'Eficiência da higienização',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este controle de higienização?',
+    },
+    feedback: {
+      created: 'Controle de higienização criado com sucesso.',
+      updated: 'Controle de higienização atualizado com sucesso.',
+      deleted: 'Controle de higienização excluído com sucesso.',
+    },
+  },
+  maintenanceControl: {
+    titles: {
+      list: 'Controle de Manutenção das Caixas',
+      details: 'Detalhes do Controle de Manutenção',
+      new: 'Novo Controle de Manutenção',
+      edit: 'Editar Controle',
+      delete: 'Excluir Controle',
+    },
+    fields: {
+      boxNumber: 'Caixa',
+      executionDate: 'Data',
+      employeeName: 'Executado por',
+      boxOption1: 'Caixa 1 - Água usada pela peletizadora',
+      boxOption2: 'Caixa 2 - Água usada na copa, sala de apoio e banheiro',
+    },
+    questions: {
+      q1: 'Tampa com vedação e ausente de trincas?',
+      q2: 'Vazamentos/Infiltrações',
+      q3: 'Descascamentos',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este controle de manutenção?',
+    },
+    feedback: {
+      created: 'Controle de manutenção criado com sucesso.',
+      updated: 'Controle de manutenção atualizado com sucesso.',
+      deleted: 'Controle de manutenção excluído com sucesso.',
+    },
+  },
+  cleaningSuppliesControl: {
+    titles: {
+      list: 'Controle de Material de Limpeza (Flushing)',
+      details: 'Detalhes do Registro',
+      new: 'Novo Registro de Limpeza',
+      edit: 'Editar Registro',
+      delete: 'Excluir Registro',
+    },
+    sections: {
+      cleaning: 'Limpeza',
+      reuse: 'Reutilização',
+    },
+    fields: {
+      executionDate: 'Data da Limpeza',
+      product: 'Produto Utilizado',
+      weight: 'Peso (kg)',
+      productionOrder: 'Nº Ordem de Produção',
+      reuseDate: 'Data de Reutilização',
+      reuseWeight: 'Peso (kg)',
+      reuseProductionOrder: 'Nº Ordem de Produção / Lote',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de limpeza?',
+    },
+    feedback: {
+      created: 'Registro criado com sucesso.',
+      updated: 'Registro atualizado com sucesso.',
+      deleted: 'Registro excluído com sucesso.',
+    },
+  },
+  maintenanceEquipmentsPop: {
+    titles: {
+      list: 'Manutenção de Equipamentos e Instrumentos',
+      details: 'Detalhes da Manutenção',
+      new: 'Nova Manutenção',
+      edit: 'Editar Manutenção',
+      delete: 'Excluir Manutenção',
+    },
+    fields: {
+      executionDate: 'Data',
+      type: 'Tipo',
+      descriptions: 'Descrição do Procedimento',
+      executedBy: 'Executor',
+      diagnosis: 'Diagnóstico',
+    },
+    types: {
+      preventive: 'Preventiva',
+      corrective: 'Corretiva',
+      damaged: 'Danificado',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de manutenção?',
+    },
+    feedback: {
+      created: 'Manutenção registrada com sucesso.',
+      updated: 'Manutenção atualizada com sucesso.',
+      deleted: 'Manutenção excluída com sucesso.',
+    },
+  },
+  productionProcess: {
+    titles: {
+      list: 'Controle de Processo Produtivo',
+      details: 'Detalhes do Processo',
+      new: 'Novo Registro de Processo',
+      edit: 'Editar Processo',
+      delete: 'Excluir Processo',
+    },
+    fields: {
+      product: 'Produto',
+      frequency: 'Frequência do Monitoramento',
+      executionDate: 'Data do Monitoramento',
+      parameter: 'Registro dos Parâmetros',
+      note: 'Medidas Corretivas',
+      employeeName: 'Executor',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de processo?',
+    },
+    feedback: {
+      created: 'Processo registrado com sucesso.',
+      updated: 'Processo atualizado com sucesso.',
+      deleted: 'Processo excluído com sucesso.',
+    },
+  },
+  checkListPest: {
+    titles: {
+      list: 'Check-List de Controle de Pragas e Resíduos',
+      details: 'Detalhes do Check-List',
+      new: 'Novo Check-List',
+      edit: 'Editar Check-List',
+      delete: 'Excluir Check-List',
+    },
+    fields: {
+      note: 'Observações',
+    },
+    questions: {
+      q1: 'As áreas ao redor das edificações apresentam material em desuso, grama e mato não aparado?',
+      q2: 'Os portões externos estão adaptados com barreiras para proteções contra as pragas e estão em bom estado de conservação?',
+      q3: 'Todas as aberturas estão adequadamente teladas?',
+      q4: 'As telas estão limpas e em bom estado de conservação?',
+      q5: 'Há presença de animais domésticos na área interna ou externa da fábrica?',
+      q6: 'Há indicativos que demonstrem a presença de pragas tais como resíduos de fezes, animais mortos, penas ou pelos?',
+      q7: 'Existe porta-iscas estrategicamente localizados e numerados?',
+      q8: 'Os portas-iscas estão em bom estado de conservação?',
+      q9: 'É observada a presença de insetos, roedores, morcegos e pássaros dentro das instalações da fábrica?',
+      q10: 'Existe casa de lixo ou depósito fechado exclusivo para o armazenamento de resíduos fora da fábrica?',
+      q11: 'As lixeiras estão identificadas e são limpas e higienizadas constantemente?',
+      q12: 'As lixeiras possuem tampa, são constituídos de material de fácil limpeza e estão em bom estado de conservação?',
+      q13: 'Os resíduos são retirados da fábrica diariamente?',
+      q14: 'Existem alimentos estocados nos armários dos colaboradores?',
+      q15: 'Os resíduos estão sendo recolhidos pela terceirizada, conforme previsto em contrato?',
+      q16: 'No controle de pragas é utilizado produtos químicos registrados no Ministério da Saúde?',
+      q17: 'Existe registro do controle de pragas (relatório de visitas, ordens de serviço, mapa de iscas)?',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este check-list?',
+    },
+    feedback: {
+      created: 'Check-list criado com sucesso.',
+      updated: 'Check-list atualizado com sucesso.',
+      deleted: 'Check-list excluído com sucesso.',
+    },
+  },
+  nonConformanceLog: {
+    titles: {
+      list: 'Registro de Não Conformidades',
+      details: 'Detalhes da Não Conformidade',
+      new: 'Nova Não Conformidade',
+      edit: 'Editar Não Conformidade',
+      delete: 'Excluir Não Conformidade',
+    },
+    fields: {
+      product: 'Produto',
+      address: 'Endereço',
+      receivingDate: 'Data do Recebimento',
+      mapRecord: 'N° Registro Mapa',
+      details: 'Não Conformidade Detectada',
+      deadline: 'Prazo para Cumprimento',
+      isApproved: 'Reaprovado?',
+      notes: 'Ação Corretiva',
+    },
+    misc: {
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este registro de não conformidade?',
+    },
+    feedback: {
+      created: 'Não conformidade registrada com sucesso.',
+      updated: 'Não conformidade atualizada com sucesso.',
+      deleted: 'Não conformidade excluída com sucesso.',
     },
   },
   cleaningEfficiency: {
@@ -235,7 +501,8 @@ export const pop = {
       q12: 'Os lavatórios estão em bom estado de conservação e dotados de sabonete antisséptico ou inodoro, papel toalha e lixeiras?',
     },
     misc: {
-      deleteConfirmation: 'Você tem certeza que deseja excluir este check-list?',
+      deleteConfirmation:
+        'Você tem certeza que deseja excluir este check-list?',
     },
     feedback: {
       created: 'Check-list criado com sucesso.',

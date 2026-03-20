@@ -208,6 +208,257 @@ export const pop = {
       deleted: 'Log deleted successfully.',
     },
   },
+  waterCoolerSanitization: {
+    titles: {
+      list: 'Water Cooler Sanitization',
+      details: 'Sanitization Details',
+      new: 'New Sanitization',
+      edit: 'Edit Sanitization',
+      delete: 'Delete Sanitization',
+    },
+    fields: {
+      executionDate: 'Date',
+      employeeSignature: 'Responsible Signature',
+      note: 'Notes',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this sanitization record?',
+    },
+    feedback: {
+      created: 'Sanitization recorded successfully.',
+      updated: 'Sanitization updated successfully.',
+      deleted: 'Sanitization deleted successfully.',
+    },
+  },
+  changeWaterCoolerFilter: {
+    titles: {
+      list: 'Change Water Cooler Filter Log',
+      details: 'Filter Change Details',
+      new: 'New Filter Change',
+      edit: 'Edit Filter Change',
+      delete: 'Delete Filter Change',
+    },
+    fields: {
+      executionDate: 'Date',
+      employeeSignature: 'Responsible Signature',
+      note: 'Notes',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this filter change record?',
+    },
+    feedback: {
+      created: 'Filter change recorded successfully.',
+      updated: 'Filter change updated successfully.',
+      deleted: 'Filter change deleted successfully.',
+    },
+  },
+  sanitizationControl: {
+    titles: {
+      list: 'Sanitization Control',
+      details: 'Control Details',
+      new: 'New Sanitization Control',
+      edit: 'Edit Control',
+      delete: 'Delete Control',
+    },
+    fields: {
+      boxNumber: 'Box',
+      executionDate: 'Sanitization Date',
+      nextExecutionDate: 'Next Sanitization',
+      employeeName: 'Executed by',
+      boxOption1: 'Box 1 - Water used by the pelletizer',
+      boxOption2: 'Box 2 - Water used in the break room, support room and bathroom',
+    },
+    questions: {
+      q1: 'Sanitization efficiency',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this sanitization control?',
+    },
+    feedback: {
+      created: 'Sanitization control created successfully.',
+      updated: 'Sanitization control updated successfully.',
+      deleted: 'Sanitization control deleted successfully.',
+    },
+  },
+  maintenanceControl: {
+    titles: {
+      list: 'Maintenance Control',
+      details: 'Maintenance Control Details',
+      new: 'New Maintenance Control',
+      edit: 'Edit Control',
+      delete: 'Delete Control',
+    },
+    fields: {
+      boxNumber: 'Box',
+      executionDate: 'Date',
+      employeeName: 'Executed by',
+      boxOption1: 'Box 1 - Water used by the pelletizer',
+      boxOption2: 'Box 2 - Water used in the break room, support room and bathroom',
+    },
+    questions: {
+      q1: 'Cap with seal and no cracks?',
+      q2: 'Leaks/Infiltrations',
+      q3: 'Peeling',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this maintenance control?',
+    },
+    feedback: {
+      created: 'Maintenance control created successfully.',
+      updated: 'Maintenance control updated successfully.',
+      deleted: 'Maintenance control deleted successfully.',
+    },
+  },
+  cleaningSuppliesControl: {
+    titles: {
+      list: 'Cleaning Supplies Control (Flushing)',
+      details: 'Record Details',
+      new: 'New Cleaning Record',
+      edit: 'Edit Record',
+      delete: 'Delete Record',
+    },
+    sections: {
+      cleaning: 'Cleaning',
+      reuse: 'Reuse / Sanitization',
+    },
+    fields: {
+      executionDate: 'Cleaning Date',
+      product: 'Product Used',
+      weight: 'Weight (kg)',
+      productionOrder: 'Production Order No.',
+      reuseDate: 'Reuse Date',
+      reuseWeight: 'Weight (kg)',
+      reuseProductionOrder: 'Production Order / Lot No.',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this cleaning record?',
+    },
+    feedback: {
+      created: 'Record created successfully.',
+      updated: 'Record updated successfully.',
+      deleted: 'Record deleted successfully.',
+    },
+  },
+  maintenanceEquipmentsPop: {
+    titles: {
+      list: 'Equipment and Instrument Maintenance',
+      details: 'Maintenance Details',
+      new: 'New Maintenance',
+      edit: 'Edit Maintenance',
+      delete: 'Delete Maintenance',
+    },
+    fields: {
+      executionDate: 'Date',
+      type: 'Type',
+      descriptions: 'Procedure Description',
+      executedBy: 'Executor',
+      diagnosis: 'Diagnosis',
+    },
+    types: {
+      preventive: 'Preventive',
+      corrective: 'Corrective',
+      damaged: 'Damaged/Compromised',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this maintenance record?',
+    },
+    feedback: {
+      created: 'Maintenance recorded successfully.',
+      updated: 'Maintenance updated successfully.',
+      deleted: 'Maintenance deleted successfully.',
+    },
+  },
+  productionProcess: {
+    titles: {
+      list: 'Production Process Control',
+      details: 'Process Details',
+      new: 'New Process Record',
+      edit: 'Edit Process',
+      delete: 'Delete Process',
+    },
+    fields: {
+      product: 'Product',
+      frequency: 'Process Frequency',
+      executionDate: 'Process Date',
+      parameter: 'Parameter Record',
+      note: 'Corrective Measures',
+      employeeName: 'Executor',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this process record?',
+    },
+    feedback: {
+      created: 'Process recorded successfully.',
+      updated: 'Process updated successfully.',
+      deleted: 'Process deleted successfully.',
+    },
+  },
+  checkListPest: {
+    titles: {
+      list: 'Pest Control and Waste Management Check-List',
+      details: 'Check-List Details',
+      new: 'New Check-List',
+      edit: 'Edit Check-List',
+      delete: 'Delete Check-List',
+    },
+    fields: {
+      note: 'Corrective Action / Notes',
+    },
+    questions: {
+      q1: 'Do the areas around the buildings have disused materials, uncut grass and weeds?',
+      q2: 'Are the external gates adapted with barriers for pest protection and in good condition?',
+      q3: 'Are all openings adequately screened?',
+      q4: 'Are the screens clean and in good condition?',
+      q5: 'Are there domestic animals in the internal or external area of the factory?',
+      q6: 'Are there indicators showing the presence of pests such as feces residues, dead animals, feathers or fur?',
+      q7: 'Are bait stations strategically located and numbered?',
+      q8: 'Are the bait stations in good condition?',
+      q9: 'Is the presence of insects, rodents, bats and birds observed inside the factory facilities?',
+      q10: 'Is there a waste house or closed deposit exclusively for waste storage outside the factory?',
+      q11: 'Are the bins identified and constantly cleaned and sanitized?',
+      q12: 'Do the bins have lids, are made of easy-to-clean material and are in good condition?',
+      q13: 'Is waste removed from the factory daily?',
+      q14: 'Are there foods stored in employees\' lockers?',
+      q15: 'Is waste being collected by the outsourced company as provided for in the contract?',
+      q16: 'In pest control, are chemical products registered with the Ministry of Health used?',
+      q17: 'Is there a pest control record (visit reports, service orders, bait map)?',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this check-list?',
+    },
+    feedback: {
+      created: 'Check-list created successfully.',
+      updated: 'Check-list updated successfully.',
+      deleted: 'Check-list deleted successfully.',
+    },
+  },
+  nonConformanceLog: {
+    titles: {
+      list: 'Non-Conformance Log',
+      details: 'Non-Conformance Details',
+      new: 'New Non-Conformance',
+      edit: 'Edit Non-Conformance',
+      delete: 'Delete Non-Conformance',
+    },
+    fields: {
+      product: 'Product',
+      address: 'Address',
+      receivingDate: 'Receiving Date',
+      mapRecord: 'Map Record No.',
+      details: 'Non-Conformance Detected',
+      deadline: 'Compliance Deadline',
+      isApproved: 'Re-approved?',
+      notes: 'Corrective Action / Notes',
+    },
+    misc: {
+      deleteConfirmation: 'Are you sure you want to delete this non-conformance record?',
+    },
+    feedback: {
+      created: 'Non-conformance recorded successfully.',
+      updated: 'Non-conformance updated successfully.',
+      deleted: 'Non-conformance deleted successfully.',
+    },
+  },
   cleaningEfficiency: {
     titles: {
       list: 'Cleaning Efficiency Check-List',
