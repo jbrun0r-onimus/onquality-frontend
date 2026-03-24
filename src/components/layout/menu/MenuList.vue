@@ -1,17 +1,27 @@
 <template>
-  <q-list>
+  <q-list class="menu-list">
     <template v-for="(section, index) in sections" :key="index">
-      <q-item-label v-if="section.label" header>
-        {{ fullyExpanded ? section.label : '&nbsp;' }}
+      <q-item-label
+        v-if="section.label && fullyExpanded"
+        header
+        class="menu-section-label"
+      >
+        {{ section.label }}
       </q-item-label>
+
       <menu-top-level-item
-        v-for="(item, index) in section.items"
-        :key="index"
+        v-for="(item, itemIndex) in section.items"
+        :key="itemIndex"
         :fully-expanded="fullyExpanded"
         :item="item"
         @expand="$emit('expand')"
       />
-      <q-separator v-if="index < sections.length - 1" spaced inset />
+
+      <q-separator
+        v-if="index < sections.length - 1"
+        class="menu-separator"
+        spaced
+      />
     </template>
   </q-list>
 </template>
@@ -32,7 +42,25 @@ defineEmits<{
 </script>
 
 <style scoped lang="scss">
-.q-list {
-  color: #707070;
+.menu-list {
+  padding: 4px 0;
+}
+
+.menu-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #94A3B8;
+  padding: 12px 18px 6px;
+
+  .body--dark & {
+    color: #475569;
+  }
+}
+
+.menu-separator {
+  margin: 4px 12px;
+  opacity: 0.4;
 }
 </style>

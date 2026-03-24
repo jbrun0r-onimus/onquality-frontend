@@ -1,28 +1,22 @@
-// Quasar SCSS (& Sass) Variables
+// OnQuality Design System
+// Tech-Luxury Premium Theme — Material Design 3 inspired
 // --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
 
-// Check documentation for full list of Quasar variables
+// Core Brand Palette
+$primary:   #0E3272;   // Deep Navy — autoridade, confiança, premium
+$secondary: #1565C0;   // Royal Blue — tecnologia, interativo
+$accent:    #F59E0B;   // Amber — luxo, atenção
 
-// Your own variables (that are declared here) and Quasar's own
-// ones will be available out of the box in your .vue/.scss/.sass files
+// Dark Mode Surfaces
+$dark:      #0D1B2E;   // Dark Navy
+$dark-page: #071020;   // Deep Near-Black
 
-// It's highly recommended to change the default colors
-// to match your app's branding.
-// Tip: Use the "Theme Builder" on Quasar's documentation website.
+// Semantic Colors (Material Design 3 tone)
+$positive: #059669;    // Emerald — sucesso, conformidade
+$negative: #DC2626;    // Red 600 — erro, não conformidade
+$info:     #0284C7;    // Sky 600 — informação
+$warning:  #D97706;    // Amber 600 — atenção, alerta
 
-$primary: #165193;
-$secondary: #165193;
-$accent: #9c27b0;
-
-$dark: #1d1d1d;
-$dark-page: #121212;
-
-$positive: #21ba45;
-$negative: #c10015;
-$info: #31ccec;
-$warning: #f2c037;
-
-$generic-border-radius: 8px !default;
+// Shape
+$generic-border-radius: 10px !default;
 $button-border-radius: $generic-border-radius;

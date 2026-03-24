@@ -1,8 +1,8 @@
 <template>
-  <q-card-section class="card-page-section">
-    <h2 v-if="title" class="q-mt-none q-mb-md">{{ title }}</h2>
+  <div class="card-page-section">
+    <h2 v-if="title" class="section-title">{{ title }}</h2>
     <slot></slot>
-  </q-card-section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -12,13 +12,19 @@ defineProps<{
 </script>
 
 <style scoped lang="scss">
-.q-card__section {
-  padding: 8px 24px;
+.card-page-section {
+  padding: 16px 24px;
 }
 
-h2 {
-  font-size: 1.25rem;
-  line-height: 1.2;
-  font-weight: 600;
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 16px;
+  letter-spacing: -0.2px;
+
+  .body--dark & {
+    color: #E2E8F0;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" class="main-layout">
     <app-header @open-drawer="drawerOpen = true" />
     <app-drawer v-model="drawerOpen" />
     <q-page-container>
@@ -21,7 +21,6 @@ const router = useRouter();
 const authStore = useAuthStore();
 
 const drawerOpen = ref(
-  // Drawer should start closed on mobile, unless we're on the home page
   $q.screen.gt.sm || router.currentRoute.value.path === '/'
 );
 
@@ -31,23 +30,24 @@ watch(
     if (isLoggedIn) return;
     router.push({ name: 'login' });
   },
-  {
-    immediate: true,
-  }
+  { immediate: true }
 );
 </script>
 
 <style scoped lang="scss">
-.q-drawer-container > :deep(.q-drawer) {
-  transition: width var(--q-transition-duration) ease-in-out;
+.main-layout {
+  background: #EBF0F7;
+
+  .body--dark & {
+    background: $dark-page;
+  }
 }
 
 .q-header {
-  transition: left var(--q-transition-duration) ease-in-out;
+  transition: left var(--q-transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .q-page-container {
-  transition: padding-left var(--q-transition-duration) ease-in-out;
-  transition-property: padding-left;
+  transition: padding-left var(--q-transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

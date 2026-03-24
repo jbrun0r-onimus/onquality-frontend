@@ -1,29 +1,33 @@
 <template>
-  <q-header elevated :class="{ dark: $q.dark.isActive }">
-    <q-toolbar>
+  <q-header class="app-header" :class="{ 'app-header--dark': $q.dark.isActive }">
+    <q-toolbar class="app-toolbar">
+      <!-- Menu toggle (mobile) -->
       <q-btn
-        class="lt-md"
+        class="lt-md menu-toggle"
         dense
         flat
         round
         icon="o_menu"
         @click="$emit('openDrawer')"
       />
-      <q-toolbar-title class="row items-center gap-2">
-        <!-- <q-icon name="o_account_circle" /> -->
-        <!-- <span>{{ authStore.empresa }}</span> -->
+
+      <!-- Brand (mobile only) -->
+      <q-toolbar-title class="brand-title lt-md">
+        <span class="brand-text">OnQuality</span>
       </q-toolbar-title>
-      <app-header-top-right class="gt-xs" />
+
+      <q-space class="gt-sm" />
+
+      <!-- Right Actions -->
+      <app-header-top-right />
     </q-toolbar>
   </q-header>
 </template>
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
-import { useAuthStore } from 'src/stores/auth.store';
 import AppHeaderTopRight from 'src/components/layout/header/AppHeaderTopRight.vue';
 
-const authStore = useAuthStore();
 const $q = useQuasar();
 
 defineEmits<{
@@ -32,22 +36,41 @@ defineEmits<{
 </script>
 
 <style scoped lang="scss">
-.q-toolbar__title {
-  font-size: 16px;
-  font-weight: 500;
+.app-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E8EDF4;
+  box-shadow: 0 1px 3px rgba(14, 50, 114, 0.06);
+  transition: background 0.2s ease, border-color 0.2s ease;
 
-  .q-icon {
-    font-size: 26px;
+  &--dark {
+    background: #0D1929;
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 }
 
-.q-header {
-  background: white;
-  color: $grey-10;
+.app-toolbar {
+  min-height: 56px;
+  padding: 0 16px;
+}
 
-  &.dark {
-    background: $grey-10;
-    color: white;
+.menu-toggle {
+  color: #475569;
+  margin-right: 4px;
+}
+
+.brand-title {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0;
+}
+
+.brand-text {
+  color: $primary;
+  letter-spacing: -0.3px;
+
+  .app-header--dark & {
+    color: #93C5FD;
   }
 }
 </style>

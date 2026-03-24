@@ -27,25 +27,36 @@ defineEmits<{
 </script>
 
 <style scoped lang="scss">
-.q-item,
+// Parent expansion item active state
 .q-expansion-item > :deep(.q-expansion-item__container > .q-item) {
-  &.active {
-    background: transparent linear-gradient(90deg, #efefef 0%, #f2f2f2 100%) 0%
-      0% no-repeat padding-box;
+  margin: 1px 8px;
+  border-radius: 8px;
+  color: #475569;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
 
-    &.q-item--dark {
-      background: transparent linear-gradient(90deg, #2b2b2b 100%, #1d1d1d 0%)
-        0% 0% no-repeat padding-box;
+  &:hover {
+    background: rgba(14, 50, 114, 0.06);
+    color: $primary;
+  }
+
+  &.active {
+    background: rgba(14, 50, 114, 0.08);
+    color: $primary;
+    font-weight: 600;
+  }
+
+  .body--dark & {
+    color: #94A3B8;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #93C5FD;
     }
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 4px;
-      background-color: $primary;
+    &.active {
+      background: rgba(147, 197, 253, 0.1);
+      color: #93C5FD;
     }
   }
 }

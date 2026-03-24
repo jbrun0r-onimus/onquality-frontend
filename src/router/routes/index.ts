@@ -10,7 +10,16 @@ export const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        redirect: '/pop/cargo-inspection',
+        redirect: '/dashboard',
+      },
+      {
+        name: 'dashboard',
+        path: 'dashboard',
+        component: () => import('pages/DashboardPage.vue'),
+        meta: {
+          name: () => 'Dashboard',
+          icon: 'o_space_dashboard',
+        },
       },
       popRoute,
     ],
@@ -38,6 +47,6 @@ export const routes: RouteRecordRaw[] = [
   popPrintRoute,
   {
     path: '/:catchAll(.*)*',
-    redirect: '/pop/cargo-inspection',
+    redirect: '/dashboard',
   },
 ];

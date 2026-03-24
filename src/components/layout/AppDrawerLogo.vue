@@ -1,73 +1,88 @@
 <template>
-  <div class="wrapper" :class="{ expanded: modelValue }">
+  <div class="drawer-logo-wrapper" :class="{ 'is-expanded': modelValue }">
+    <!-- Logo / Icon -->
     <div
       role="button"
-      class="cursor-pointer"
+      class="logo-btn cursor-pointer"
+      :class="{ 'logo-btn--expanded': modelValue }"
       @click="$emit('update:modelValue', !modelValue)"
+      :title="modelValue ? 'Recolher menu' : 'Expandir menu'"
     >
       <q-img
+        v-if="modelValue"
         src="~assets/img/logo.png"
-        :width="`${imageDimensions.width}px`"
-        :height="`${imageDimensions.height}px`"
+        class="logo-full"
         fit="contain"
       />
+      <q-icon
+        v-else
+        name="o_verified_user"
+        size="24px"
+        class="logo-icon"
+      />
     </div>
-    <div class="separator-wrapper">
-      <q-separator class="q-mx-md" />
-    </div>
+
+    <q-separator class="logo-separator" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-
-const props = defineProps<{
+defineProps<{
   modelValue?: boolean;
 }>();
 
 defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
 }>();
-
-const imageDimensions = computed(() =>
-  props.modelValue ? { width: 110, height: 114 } : { width: 32, height: 33 }
-);
 </script>
 
 <style scoped lang="scss">
-.wrapper {
-  position: relative;
+.drawer-logo-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  padding-top: 12px;
+}
+
+.logo-btn {
+  display: flex;
   align-items: center;
-  width: 100%;
-  height: 160px;
+  justify-content: center;
+  padding: 10px 12px;
+  min-height: 60px;
+  transition: background 0.15s ease;
+  border-radius: 0;
 
-  &.expanded {
-    .q-img {
-      top: 50%;
-      transform: translate(50%, -50%);
-    }
+  &:hover {
+    background: rgba(14, 50, 114, 0.05);
+  }
 
-    .separator-wrapper {
-      transform: translateX(0);
-    }
+  .body--dark &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &--expanded {
+    min-height: 80px;
+    padding: 12px 20px;
   }
 }
 
-.q-img {
-  position: absolute;
-  top: 8px;
-  right: 50%;
-  transition: all var(--q-transition-duration) ease-in-out;
-  transform: translate(50%, 0);
+.logo-full {
+  width: 110px;
+  height: auto;
+  max-height: 56px;
 }
 
-.separator-wrapper {
-  position: absolute;
-  transition: transform var(--q-transition-duration) ease-in-out;
-  bottom: 0;
-  width: 100%;
-  transform: translateX(-100%);
+.logo-icon {
+  color: $primary;
+
+  .body--dark & {
+    color: #93C5FD;
+  }
+}
+
+.logo-separator {
+  margin: 4px 16px;
+  opacity: 0.5;
 }
 </style>

@@ -38,6 +38,12 @@ function makeMenuSections(
   return [
     {
       items: keepPresent([
+        fromRoute({ name: 'dashboard' }),
+      ]),
+    },
+    {
+      label: i18n.t('pop.title'),
+      items: keepPresent([
         keepWithChildren({
           label: i18n.t('pop.title'),
           children: keepPresent([
