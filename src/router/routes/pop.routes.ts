@@ -15,6 +15,8 @@ export const popPrintRoute: RouteRecordRaw = {
     { path: 'change-water-cooler-filter/:id', component: () => import('pages/pop/print/ChangeWaterCoolerFilterPrintPage.vue') },
     { path: 'sanitization-control/:id', component: () => import('pages/pop/print/SanitizationControlPrintPage.vue') },
     { path: 'maintenance-control/:id', component: () => import('pages/pop/print/MaintenanceControlPrintPage.vue') },
+    { path: 'cleaning-supplies-control/:id', component: () => import('pages/pop/print/CleaningSuppliesControlPrintPage.vue') },
+    { path: 'check-list-pest/:id', component: () => import('pages/pop/print/CheckListPestPrintPage.vue') },
   ],
 };
 

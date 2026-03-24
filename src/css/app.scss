@@ -64,3 +64,64 @@
 .q-card {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
+
+// ─── Separação toolbar / tabela nas páginas de listagem ───────────────────────
+// A div com justify-end contém o botão "+ Novo" — cria espaço visual acima da tabela
+
+.card-page-section > .row.justify-end {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F1F5F9;
+  margin-bottom: 4px;
+}
+
+.body--dark .card-page-section > .row.justify-end {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+// ─── Melhorias no markup-table dos dialogs ────────────────────────────────────
+
+.q-markup-table {
+  border-radius: 8px !important;
+  overflow: hidden;
+
+  thead tr th {
+    background: #F1F5F9;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #64748B;
+    padding: 8px 10px;
+  }
+
+  tbody tr td {
+    font-size: 12.5px;
+    color: #334155;
+    padding: 7px 10px;
+    border-bottom: 1px solid #F8FAFC;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
+    background: rgba(14, 50, 114, 0.025);
+  }
+}
+
+.body--dark .q-markup-table {
+  thead tr th {
+    background: #162033;
+    color: #64748B;
+  }
+
+  tbody tr td {
+    color: #CBD5E1;
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+  }
+
+  tbody tr:hover td {
+    background: rgba(147, 197, 253, 0.04);
+  }
+}

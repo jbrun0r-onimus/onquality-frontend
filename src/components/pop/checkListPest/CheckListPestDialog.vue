@@ -80,6 +80,13 @@
           @click="onDialogCancel"
         />
         <app-button
+          v-if="readonly && props.item"
+          icon="o_picture_as_pdf"
+          color="red-7"
+          :label="$t('pop.common.exportPdf')"
+          @click="openPrintWindow('check-list-pest', props.item.id)"
+        />
+        <app-button
           v-if="!readonly"
           type="submit"
           color="positive"
@@ -192,4 +199,9 @@ watch(
 );
 
 const onSubmit = handleSubmit((data) => mutate(data));
+
+function openPrintWindow(route: string, id: number) {
+  const url = `${window.location.origin}${window.location.pathname}#/pop/print/${route}/${id}`;
+  window.open(url, '_blank');
+}
 </script>

@@ -11,19 +11,19 @@
           </td>
           <!-- Title (spans 2 columns) -->
           <td class="header-title" colspan="2">
-            PLANILHA DE CONTROLE DE RECEBIMENTO DE MATÉRIAS PRIMAS E INGREDIENTES
+            PLANILHA DO MATERIAL UTILIZADO NA LIMPEZA DE ARRASTE (FLUSHING)
           </td>
         </tr>
         <tr>
           <!-- Year -->
           <td class="header-year">{{ currentYear }}</td>
           <!-- Code / Version -->
-          <td class="header-version">PL 01<br />Versão: 04</td>
+          <td class="header-version">PL 05<br />Versão: 04</td>
         </tr>
         <tr>
           <!-- Frequency (spans all 3 columns) -->
           <td class="header-freq" colspan="3">
-            FREQUÊNCIA: A cada recebimento de Matéria-Prima e Ingrediente
+            FREQUÊNCIA: A cada limpeza de arraste flushing
           </td>
         </tr>
       </tbody>
@@ -33,46 +33,35 @@
     <table class="main-table">
       <thead>
         <tr>
-          <th>Fornecedor</th>
-          <th>Produto</th>
-          <th>Data do<br />Recebimento</th>
-          <th>Lote</th>
-          <th>Peso<br />(Kg)</th>
-          <th>Data de<br />Validade</th>
-          <th>Integridade da(s)<br />embalagem(ns)</th>
-          <th>Condições físicas<br />do(s) produto(s)</th>
-          <th>Informações<br />do rótulo</th>
-          <th>Condições higiênicas<br />do transporte</th>
-          <th>N° NF</th>
-          <th>Executor</th>
+          <th>Data da<br />limpeza</th>
+          <th>Produto<br />Utilizado</th>
+          <th>Peso<br />(kg)</th>
+          <th>N° Ordem de<br />produção</th>
+          <th>Data da<br />reutilização</th>
+          <th>Peso<br />(kg)</th>
+          <th>N° Ordem de<br />produção/Lote</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{ data.supplier }}</td>
+          <td class="center">{{ data.execution_date }}</td>
           <td>{{ data.product }}</td>
-          <td class="center">{{ data.receiving_date }}</td>
-          <td class="center">{{ data.batch_number }}</td>
           <td class="center">{{ data.weight }}</td>
-          <td class="center">{{ data.expiration_date }}</td>
-          <td class="center">{{ formatBoolCNC(data.question1) }}</td>
-          <td class="center">{{ formatBoolCNC(data.question2) }}</td>
-          <td class="center">{{ formatBoolCNC(data.question3) }}</td>
-          <td class="center">{{ formatBoolCNC(data.question4) }}</td>
-          <td class="center">{{ data.invoice }}</td>
-          <td>{{ data.performed_by }}</td>
+          <td class="center">{{ data.production_order }}</td>
+          <td class="center">{{ data.reuse_date ?? '' }}</td>
+          <td class="center">{{ data.reuse_weight ?? '' }}</td>
+          <td class="center">{{ data.reuse_production_order ?? '' }}</td>
         </tr>
-        <!-- blank rows for future entries on same sheet -->
-        <tr v-for="i in 8" :key="i"><td v-for="j in 12" :key="j">&nbsp;</td></tr>
+        <tr v-for="i in 10" :key="i"><td v-for="j in 7" :key="j">&nbsp;</td></tr>
       </tbody>
     </table>
 
-    <!-- ─── Corrective Actions Table ───────────────────────────────────────── -->
+    <!-- ─── Observations Table ─────────────────────────────────────────────── -->
     <table class="secondary-table">
       <thead>
         <tr>
           <th class="col-date">DATA</th>
-          <th>AÇÃO CORRETIVA</th>
+          <th>OBSERVAÇÕES</th>
         </tr>
       </thead>
       <tbody>
@@ -110,28 +99,21 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { getMaterialReceiving } from 'src/services/pop/materialReceiving.service';
-import type { MaterialReceivingDetail } from 'src/schemas/pop/materialReceiving.schemas';
+import { getCleaningSuppliesControl } from 'src/services/pop/cleaningSuppliesControl.service';
+import type { CleaningSuppliesControlDetail } from 'src/schemas/pop/cleaningSuppliesControl.schemas';
 
 const route = useRoute();
-const data = ref<MaterialReceivingDetail | null>(null);
+const data = ref<CleaningSuppliesControlDetail | null>(null);
 const currentYear = new Date().getFullYear();
-
-function formatBoolCNC(val: boolean | null | undefined): string {
-  if (val === true) return 'C';
-  if (val === false) return 'NC';
-  return '-';
-}
 
 onMounted(async () => {
   const id = Number(route.params.id);
-  data.value = await getMaterialReceiving(id);
+  data.value = await getCleaningSuppliesControl(id);
   setTimeout(() => window.print(), 800);
 });
 </script>
 
 <style>
-/* ─── Reset & Base ─────────────────────────────────────────────────────────── */
 .pop-print {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 8pt;
@@ -226,7 +208,7 @@ onMounted(async () => {
   text-align: center;
 }
 
-/* ─── Secondary (Corrective Actions) Table ─────────────────────────────────── */
+/* ─── Secondary (Observations) Table ──────────────────────────────────────── */
 .secondary-table {
   width: 100%;
   border-collapse: collapse;
