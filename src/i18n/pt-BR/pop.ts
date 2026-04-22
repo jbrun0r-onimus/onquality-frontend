@@ -10,6 +10,7 @@ export const pop = {
     exportPdf: 'Exportar PDF',
     evidences: 'Evidências / Registros Fotográficos',
     addEvidences: 'Adicionar Fotos',
+    takePhoto: 'Tirar Foto',
     noEvidences: 'Nenhuma evidência registrada.',
     deleteEvidenceConfirmation: 'Deseja remover esta evidência?',
   },

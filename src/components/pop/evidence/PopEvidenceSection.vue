@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div v-if="!readonly">
+      <div v-if="!readonly" class="row q-gutter-sm">
         <q-file
           ref="fileInputRef"
           v-model="selectedFiles"
@@ -49,14 +49,31 @@
           style="display: none"
           @update:model-value="onFilesSelected"
         />
+        <q-file
+          ref="cameraInputRef"
+          v-model="cameraFile"
+          accept="image/*"
+          capture="environment"
+          style="display: none"
+          @update:model-value="onFilesSelected"
+        />
         <q-btn
           outline
           color="primary"
-          icon="o_add_a_photo"
+          icon="o_photo_library"
           :label="$t('pop.common.addEvidences')"
           size="sm"
           :loading="isUploading"
           @click="fileInputRef?.pickFiles()"
+        />
+        <q-btn
+          outline
+          color="primary"
+          icon="o_add_a_photo"
+          :label="$t('pop.common.takePhoto')"
+          size="sm"
+          :loading="isUploading"
+          @click="cameraInputRef?.pickFiles()"
         />
       </div>
 
@@ -121,7 +138,9 @@ const isLoading = ref(false);
 const isUploading = ref(false);
 const deletingId = ref<number | null>(null);
 const selectedFiles = ref<File[]>([]);
+const cameraFile = ref<File | null>(null);
 const fileInputRef = ref<InstanceType<typeof QFile> | null>(null);
+const cameraInputRef = ref<InstanceType<typeof QFile> | null>(null);
 const lightboxOpen = ref(false);
 const lightboxEvidence = ref<PopEvidence | null>(null);
 const confirmDeleteOpen = ref(false);
