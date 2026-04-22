@@ -8,6 +8,10 @@ export const pop = {
     condition: 'Condição',
     createdAt: 'Criado em',
     exportPdf: 'Exportar PDF',
+    evidences: 'Evidências / Registros Fotográficos',
+    addEvidences: 'Adicionar Fotos',
+    noEvidences: 'Nenhuma evidência registrada.',
+    deleteEvidenceConfirmation: 'Deseja remover esta evidência?',
   },
   cargoInspection: {
     titles: {

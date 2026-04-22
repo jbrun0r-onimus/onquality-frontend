@@ -37,6 +37,14 @@
         />
       </div>
 
+      <card-page-section v-if="props.item">
+        <pop-evidence-section
+          pop-type="water-cooler-sanitization"
+          :pop-id="props.item?.id"
+          :readonly="readonly"
+        />
+      </card-page-section>
+
       <q-card-actions align="right">
         <app-button
           color="grey-6"
@@ -89,6 +97,7 @@ import TextField from 'src/components/form/TextField.vue';
 import DateField from 'src/components/form/DateField.vue';
 import AppButton from 'src/components/misc/AppButton';
 import SpinnerAndRetry from 'src/components/misc/SpinnerAndRetry.vue';
+import PopEvidenceSection from 'src/components/pop/evidence/PopEvidenceSection.vue';
 
 const props = defineProps<{
   item?: WaterCoolerSanitizationListItem;

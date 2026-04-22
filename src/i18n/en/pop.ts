@@ -8,6 +8,10 @@ export const pop = {
     condition: 'Condition',
     createdAt: 'Created at',
     exportPdf: 'Export PDF',
+    evidences: 'Photo Evidence / Records',
+    addEvidences: 'Add Photos',
+    noEvidences: 'No evidence recorded.',
+    deleteEvidenceConfirmation: 'Do you want to remove this evidence?',
   },
   cargoInspection: {
     titles: {

@@ -1,5 +1,7 @@
-FROM node:18-alpine as dependencies
+FROM node:20-alpine as dependencies
 WORKDIR /app
+
+ENV YARN_IGNORE_ENGINES=1
 
 # Instalar Quasar CLI globalmente
 RUN yarn global add @quasar/cli
@@ -11,12 +13,12 @@ RUN yarn config set registry https://registry.yarnpkg.com
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn
+RUN yarn --ignore-engines
 
 # Install com retry em caso de falha
-RUN yarn install --frozen-lockfile --network-timeout 300000 || \
-    yarn install --frozen-lockfile --network-timeout 300000 || \
-    yarn install --frozen-lockfile --network-timeout 600000
+RUN yarn install --frozen-lockfile --ignore-engines --network-timeout 300000 || \
+    yarn install --frozen-lockfile --ignore-engines --network-timeout 300000 || \
+    yarn install --frozen-lockfile --ignore-engines --network-timeout 600000
 
 COPY . .
 

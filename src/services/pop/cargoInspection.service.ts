@@ -18,7 +18,7 @@ function fromApiPagination<T>(
   items: T[],
   total: number,
   offset: number,
-  limit: number
+  limit: number,
 ): PaginationResponse<T> {
   return {
     records: items,
@@ -30,16 +30,23 @@ function fromApiPagination<T>(
 }
 
 export async function getCargoInspections(
-  params: Partial<CargoInspectionListRequest>
+  params: Partial<CargoInspectionListRequest>,
 ): Promise<PaginationResponse<CargoInspectionListItem>> {
   const response = await api.get('/onquality/cargo_inspection/', {
     params: toApiPagination(params),
   });
   const { items, total, offset, limit } = response.data;
-  return fromApiPagination<CargoInspectionListItem>(items, total, offset, limit);
+  return fromApiPagination<CargoInspectionListItem>(
+    items,
+    total,
+    offset,
+    limit,
+  );
 }
 
-export async function getCargoInspection(id: number): Promise<CargoInspectionDetail> {
+export async function getCargoInspection(
+  id: number,
+): Promise<CargoInspectionDetail> {
   const response = await api.get(`/onquality/cargo_inspection/${id}`);
   return response.data;
 }
@@ -48,7 +55,10 @@ export async function createCargoInspection(data: CargoInspectionForm) {
   await api.post('/onquality/cargo_inspection/', data);
 }
 
-export async function updateCargoInspection(id: number, data: CargoInspectionForm) {
+export async function updateCargoInspection(
+  id: number,
+  data: CargoInspectionForm,
+) {
   await api.put(`/onquality/cargo_inspection/${id}`, data);
 }
 
@@ -58,10 +68,10 @@ export async function deleteCargoInspection(id: number) {
 
 export const cargoInspectionsQuery = definePaginatedQuery(
   'cargo-inspections',
-  getCargoInspections
+  getCargoInspections,
 );
 
 export const cargoInspectionDetailQuery = defineQuery(
   'cargo-inspection-detail',
-  getCargoInspection
+  getCargoInspection,
 );
