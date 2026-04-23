@@ -17,7 +17,7 @@
             :src="evidence.url"
             :ratio="1"
             class="rounded-borders cursor-pointer"
-            style="width: 90px; height: 90px"
+            style="width: 160px; height: 160px"
             @click="openLightbox(evidence)"
           >
             <template #error>
@@ -55,7 +55,7 @@
           accept="image/*"
           capture="environment"
           style="display: none"
-          @update:model-value="onFilesSelected"
+          @update:model-value="onCameraFileSelected"
         />
         <q-btn
           outline
@@ -82,16 +82,18 @@
       </div>
     </div>
 
-    <q-dialog v-model="lightboxOpen">
-      <q-card style="max-width: 90vw; max-height: 90vh">
-        <q-img
-          :src="lightboxEvidence?.url"
-          fit="contain"
-          style="max-width: 90vw; max-height: 80vh"
-        />
-        <q-card-actions align="right">
-          <q-btn flat label="Fechar" v-close-popup />
+    <q-dialog v-model="lightboxOpen" maximized>
+      <q-card class="column" style="background: #111">
+        <q-card-actions class="q-pa-sm">
+          <q-btn flat color="white" icon="o_close" label="Fechar" v-close-popup />
         </q-card-actions>
+        <div class="col flex flex-center q-pa-md">
+          <q-img
+            :src="lightboxEvidence?.url"
+            fit="contain"
+            style="width: 100%; height: 100%; max-height: calc(100vh - 64px)"
+          />
+        </div>
       </q-card>
     </q-dialog>
 
@@ -156,6 +158,10 @@ async function loadEvidences() {
   } finally {
     isLoading.value = false;
   }
+}
+
+function onCameraFileSelected(file: File | null) {
+  if (file) onFilesSelected([file]);
 }
 
 async function onFilesSelected(files: File[] | null) {

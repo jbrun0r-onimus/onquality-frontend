@@ -76,5 +76,13 @@ defineExpose({
   display: flex;
   align-items: center;
   font-size: inherit;
+  white-space: normal;
+  overflow: visible;
+  line-height: 1.3;
+}
+
+.menu-sub-item :deep(.q-item__section) {
+  overflow: visible;
+  white-space: normal;
 }
 </style>

@@ -22,7 +22,10 @@
       <tbody>
         <tr>
           <td>{{ formatDate(data.execution_date) }}</td>
-          <td>{{ data.employee_signature }}</td>
+          <td>
+            {{ data.employee_signature }}
+            <img v-if="sigEmployeeSignature" :src="sigEmployeeSignature" class="sig-img" />
+          </td>
           <td>{{ data.note ?? '' }}</td>
         </tr>
       </tbody>
@@ -37,9 +40,11 @@ import { useRoute } from 'vue-router';
 import { parse, format } from 'date-fns';
 import { getChangeWaterCoolerFilter } from 'src/services/pop/changeWaterCoolerFilter.service';
 import type { ChangeWaterCoolerFilterDetail } from 'src/schemas/pop/changeWaterCoolerFilter.schemas';
+import { getPopSignatures } from 'src/services/pop/popSignature.service';
 
 const route = useRoute();
 const data = ref<ChangeWaterCoolerFilterDetail | null>(null);
+const sigEmployeeSignature = ref<string | null>(null);
 
 function formatDate(dateStr: string): string {
   try {
@@ -52,7 +57,12 @@ function formatDate(dateStr: string): string {
 
 onMounted(async () => {
   const id = Number(route.params.id);
-  data.value = await getChangeWaterCoolerFilter(id);
+  const [detail, sigs] = await Promise.all([
+    getChangeWaterCoolerFilter(id),
+    getPopSignatures('change-water-cooler-filter', id),
+  ]);
+  data.value = detail;
+  sigEmployeeSignature.value = sigs.find((s) => s.field_name === 'employee_signature')?.url ?? null;
   setTimeout(() => window.print(), 800);
 });
 </script>
@@ -68,6 +78,7 @@ onMounted(async () => {
 .data-table { width: 100%; border-collapse: collapse; border: 1px solid #000; border-top: none; }
 .data-table th, .data-table td { border: 1px solid #000; padding: 4px 6px; }
 .data-table th { background: #f0f0f0; font-weight: bold; text-align: center; }
+.sig-img { display: block; max-height: 40px; max-width: 160px; margin-top: 2px; }
 .loading { padding: 20px; text-align: center; }
 @media print {
   .pop-print { padding: 0; margin: 0; max-width: 100%; }

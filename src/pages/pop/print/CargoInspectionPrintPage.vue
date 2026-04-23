@@ -53,7 +53,10 @@
         <tbody>
           <tr>
             <th class="footer-th">MONITORADO POR:</th>
-            <td class="footer-td">{{ data.monitored_by }}</td>
+            <td class="footer-td">
+              {{ data.monitored_by }}
+              <img v-if="sigMonitoredBy" :src="sigMonitoredBy" class="sig-img" />
+            </td>
           </tr>
         </tbody>
       </table>
@@ -61,7 +64,10 @@
         <tbody>
           <tr>
             <th class="footer-th">VERIFICADO POR:</th>
-            <td class="footer-td">{{ data.verified_by }}</td>
+            <td class="footer-td">
+              {{ data.verified_by }}
+              <img v-if="sigVerifiedBy" :src="sigVerifiedBy" class="sig-img" />
+            </td>
           </tr>
           <tr>
             <th class="footer-th">OBSERVAÇÕES:</th>
@@ -81,9 +87,12 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { getCargoInspection } from 'src/services/pop/cargoInspection.service';
 import type { CargoInspectionDetail } from 'src/schemas/pop/cargoInspection.schemas';
+import { getPopSignatures } from 'src/services/pop/popSignature.service';
 
 const route = useRoute();
 const data = ref<CargoInspectionDetail | null>(null);
+const sigMonitoredBy = ref<string | null>(null);
+const sigVerifiedBy = ref<string | null>(null);
 
 const questions = [
   'O veículo está com parte interna limpa, livre de pó, poeira, vestígios de pragas e resíduos de cargas anteriores?',
@@ -121,7 +130,13 @@ function formatDate(dateStr: string) {
 
 onMounted(async () => {
   const id = Number(route.params.id);
-  data.value = await getCargoInspection(id);
+  const [detail, sigs] = await Promise.all([
+    getCargoInspection(id),
+    getPopSignatures('cargo-inspection', id),
+  ]);
+  data.value = detail;
+  sigMonitoredBy.value = sigs.find((s) => s.field_name === 'monitored_by')?.url ?? null;
+  sigVerifiedBy.value = sigs.find((s) => s.field_name === 'verified_by')?.url ?? null;
   const prevTitle = document.title;
   setTimeout(() => {
     document.title = '';
@@ -161,6 +176,7 @@ onMounted(async () => {
 .footer-th { background: #f0f0f0; border: 1px solid #000; padding: 2px 8px; font-size: 9pt; font-weight: bold; text-align: left; white-space: nowrap; width: 1%; vertical-align: middle; }
 .footer-td { border: 1px solid #000; padding: 2px 8px; height: 1.4em; vertical-align: middle; font-size: 9pt; text-align: left; }
 .footer-td-tall { height: 2.8em; }
+.sig-img { display: block; max-height: 50px; max-width: 180px; margin-top: 2px; }
 .loading { padding: 20px; text-align: center; }
 @media print {
   @page { margin: 0; size: A4; }
