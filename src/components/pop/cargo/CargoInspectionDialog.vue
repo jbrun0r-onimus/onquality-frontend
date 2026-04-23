@@ -110,6 +110,24 @@
               v-bind="formBinds.verified_by"
               :readonly="readonly"
             />
+            <signature-field
+              v-if="props.item"
+              class="col-12 col-sm-6"
+              pop-type="cargo-inspection"
+              :pop-id="props.item?.id"
+              field-name="monitored_by"
+              :label="$t('pop.cargoInspection.fields.monitoredBy')"
+              :readonly="readonly"
+            />
+            <signature-field
+              v-if="props.item"
+              class="col-12 col-sm-6"
+              pop-type="cargo-inspection"
+              :pop-id="props.item?.id"
+              field-name="verified_by"
+              :label="$t('pop.cargoInspection.fields.verifiedBy')"
+              :readonly="readonly"
+            />
             <text-field
               class="col-12"
               type="textarea"
@@ -190,6 +208,7 @@ import TextField from 'src/components/form/TextField.vue';
 import AppButton from 'src/components/misc/AppButton';
 import SpinnerAndRetry from 'src/components/misc/SpinnerAndRetry.vue';
 import PopEvidenceSection from 'src/components/pop/evidence/PopEvidenceSection.vue';
+import SignatureField from 'src/components/pop/signature/SignatureField.vue';
 
 const props = defineProps<{
   item?: CargoInspectionListItem;

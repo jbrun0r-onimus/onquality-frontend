@@ -16,6 +16,15 @@
               v-bind="formBinds.employee_signature"
               :readonly="readonly"
             />
+            <signature-field
+              v-if="props.item"
+              class="col-12 col-sm-6"
+              pop-type="water-cooler-sanitization"
+              :pop-id="props.item?.id"
+              field-name="employee_signature"
+              :label="$t('pop.waterCoolerSanitization.fields.employeeSignature')"
+              :readonly="readonly"
+            />
             <text-field
               class="col-12"
               type="textarea"
@@ -98,6 +107,7 @@ import DateField from 'src/components/form/DateField.vue';
 import AppButton from 'src/components/misc/AppButton';
 import SpinnerAndRetry from 'src/components/misc/SpinnerAndRetry.vue';
 import PopEvidenceSection from 'src/components/pop/evidence/PopEvidenceSection.vue';
+import SignatureField from 'src/components/pop/signature/SignatureField.vue';
 
 const props = defineProps<{
   item?: WaterCoolerSanitizationListItem;
