@@ -6,6 +6,7 @@ import {
   MonitoringRoomListItem,
   MonitoringRoomListRequest,
   MonitoringRoomDetail,
+  MonitoringRoomMonthlyResponse,
 } from 'src/schemas/pop/monitoringRoom.schemas';
 import { definePaginatedQuery, defineQuery } from 'src/helpers/query.helpers';
 
@@ -96,3 +97,13 @@ export const monitoringRoomDetailQuery = defineQuery(
   'monitoring-room-detail',
   getMonitoringRoom
 );
+
+export async function getMonitoringRoomMonthly(
+  month: number,
+  year: number
+): Promise<MonitoringRoomMonthlyResponse> {
+  const response = await api.get('/onquality/monitoring_room_area/monthly', {
+    params: { month, year },
+  });
+  return response.data;
+}

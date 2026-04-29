@@ -9,6 +9,7 @@ export const popPrintRoute: RouteRecordRaw = {
     { path: 'cleaning-efficiency/:id', component: () => import('pages/pop/print/CleaningEfficiencyPrintPage.vue') },
     { path: 'sanitation-control/:id', component: () => import('pages/pop/print/SanitationControlPrintPage.vue') },
     { path: 'monitoring-room/:id', component: () => import('pages/pop/print/MonitoringRoomPrintPage.vue') },
+    { path: 'monitoring-room-monthly', component: () => import('pages/pop/print/MonitoringRoomMonthlyPrintPage.vue') },
     { path: 'monitoring-equipments/:id', component: () => import('pages/pop/print/MonitoringEquipmentsPrintPage.vue') },
     { path: 'training-log/:id', component: () => import('pages/pop/print/TrainingLogPrintPage.vue') },
     { path: 'water-cooler-sanitization/:id', component: () => import('pages/pop/print/WaterCoolerSanitizationPrintPage.vue') },
@@ -53,6 +54,15 @@ export const popRoute: RouteRecordRaw = {
       meta: {
         name: (i18n: any) => i18n.t('pop.monitoringRoom.titles.list'),
         icon: 'o_home_work',
+      },
+    },
+    {
+      name: 'pop.monitoringRoomMonthly',
+      path: 'monitoring-room-monthly',
+      component: () => import('pages/pop/MonitoringRoomMonthlyPage.vue'),
+      meta: {
+        name: (i18n: any) => i18n.t('pop.monitoringRoom.titles.monthly'),
+        icon: 'o_calendar_month',
       },
     },
     {

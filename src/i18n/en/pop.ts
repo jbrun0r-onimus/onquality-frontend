@@ -100,10 +100,21 @@ export const pop = {
   monitoringRoom: {
     titles: {
       list: 'Cleaning Frequency - Facilities',
+      monthly: 'Monthly Spreadsheet - Facilities',
       details: 'Monitoring Details',
       new: 'New Cleaning Record',
       edit: 'Edit Record',
       delete: 'Delete Record',
+    },
+    monthly: {
+      selectMonth: 'Select Month/Year',
+      exportExcel: 'Export Excel',
+      exportPdf: 'Export PDF',
+      executedBy: 'EXECUTED BY',
+      correctiveActions: 'CORRECTIVE ACTIONS',
+      monitoredBy: 'MONITORED BY',
+      verifiedBy: 'VERIFIED BY',
+      date: 'DATE',
     },
     fields: {
       executionDate: 'Execution Date',

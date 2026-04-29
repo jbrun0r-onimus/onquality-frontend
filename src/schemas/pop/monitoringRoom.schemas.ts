@@ -29,3 +29,15 @@ export const monitoringRoomDetailSchema = monitoringRoomFormSchema.shape({
 });
 
 export type MonitoringRoomDetail = InferType<typeof monitoringRoomDetailSchema>;
+
+export type MonitoringRoomMonthlyRow = {
+  location: string;
+  days: Record<number, boolean | null>;
+};
+
+export type MonitoringRoomMonthlyResponse = {
+  month: number;
+  year: number;
+  days_in_month: number;
+  rows: MonitoringRoomMonthlyRow[];
+};
