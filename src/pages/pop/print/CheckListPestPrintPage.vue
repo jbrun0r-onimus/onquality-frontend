@@ -48,7 +48,9 @@
       <tbody>
         <tr>
           <td class="sig-label">MONITORADO POR:</td>
-          <td class="sig-line"></td>
+          <td class="sig-line">
+            <img v-if="sigMonitoredBy" :src="sigMonitoredBy" class="sig-img" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -58,7 +60,9 @@
       <tbody>
         <tr>
           <td class="sig-label">VERIFICADO POR:</td>
-          <td class="sig-line"></td>
+          <td class="sig-line">
+            <img v-if="sigVerifiedBy" :src="sigVerifiedBy" class="sig-img" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -93,6 +97,7 @@ import { useRoute } from 'vue-router';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { getCheckListPest } from 'src/services/pop/checkListPest.service';
+import { getPopSignatures } from 'src/services/pop/popSignature.service';
 import type { CheckListPestDetail } from 'src/schemas/pop/checkListPest.schemas';
 
 const QUESTIONS = [
@@ -117,6 +122,8 @@ const QUESTIONS = [
 
 const route = useRoute();
 const data = ref<CheckListPestDetail | null>(null);
+const sigMonitoredBy = ref<string | null>(null);
+const sigVerifiedBy = ref<string | null>(null);
 
 const questions = computed(() =>
   QUESTIONS.map((text, i) => ({
@@ -145,7 +152,13 @@ const monthYear = computed(() => {
 
 onMounted(async () => {
   const id = Number(route.params.id);
-  data.value = await getCheckListPest(id);
+  const [detail, sigs] = await Promise.all([
+    getCheckListPest(id),
+    getPopSignatures('check-list-pest', id),
+  ]);
+  data.value = detail;
+  sigMonitoredBy.value = sigs.find((s) => s.field_name === 'monitored_by')?.url ?? null;
+  sigVerifiedBy.value = sigs.find((s) => s.field_name === 'verified_by')?.url ?? null;
   setTimeout(() => window.print(), 800);
 });
 </script>
@@ -277,6 +290,13 @@ onMounted(async () => {
   width: 50%;
   vertical-align: top;
   padding: 4px 6px;
+}
+
+.sig-img {
+  max-height: 32px;
+  max-width: 180px;
+  object-fit: contain;
+  display: block;
 }
 
 /* ─── Loading ──────────────────────────────────────────────────────────────── */

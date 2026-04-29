@@ -18,6 +18,12 @@
             />
             <text-field
               class="col-12 col-sm-6"
+              :label="$t('pop.nonConformanceLog.fields.supplier')"
+              v-bind="formBinds.supplier"
+              :readonly="readonly"
+            />
+            <text-field
+              class="col-12 col-sm-6"
               :label="$t('pop.nonConformanceLog.fields.address')"
               v-bind="formBinds.address"
               :readonly="readonly"
@@ -39,6 +45,14 @@
               type="textarea"
               :label="$t('pop.nonConformanceLog.fields.details')"
               v-bind="formBinds.details"
+              :readonly="readonly"
+              autogrow
+            />
+            <text-field
+              class="col-12"
+              type="textarea"
+              :label="$t('pop.nonConformanceLog.fields.correctiveAction')"
+              v-bind="formBinds.corrective_action"
               :readonly="readonly"
               autogrow
             />
@@ -78,6 +92,27 @@
       </div>
 
       <card-page-section v-if="props.item">
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-sm-6">
+            <signature-field
+              pop-type="non-conformance-log"
+              :pop-id="props.item.id"
+              field-name="monitored_by"
+              :label="$t('pop.nonConformanceLog.fields.monitoredBy')"
+            />
+          </div>
+          <div class="col-12 col-sm-6">
+            <signature-field
+              pop-type="non-conformance-log"
+              :pop-id="props.item.id"
+              field-name="verified_by"
+              :label="$t('pop.nonConformanceLog.fields.verifiedBy')"
+            />
+          </div>
+        </div>
+      </card-page-section>
+
+      <card-page-section v-if="props.item">
         <pop-evidence-section
           pop-type="non-conformance-log"
           :pop-id="props.item?.id"
@@ -91,6 +126,13 @@
           outline
           :label="readonly ? $t('common.actions.goBack') : $t('common.actions.cancel')"
           @click="onDialogCancel"
+        />
+        <app-button
+          v-if="readonly && props.item"
+          icon="o_picture_as_pdf"
+          color="red-7"
+          :label="$t('pop.common.exportPdf')"
+          @click="openPrintWindow(props.item.id)"
         />
         <app-button
           v-if="!readonly"
@@ -131,6 +173,7 @@ import DateField from 'src/components/form/DateField.vue';
 import AppButton from 'src/components/misc/AppButton';
 import SpinnerAndRetry from 'src/components/misc/SpinnerAndRetry.vue';
 import PopEvidenceSection from 'src/components/pop/evidence/PopEvidenceSection.vue';
+import SignatureField from 'src/components/pop/signature/SignatureField.vue';
 
 const props = defineProps<{
   item?: NonConformanceLogListItem;
@@ -191,10 +234,15 @@ function isoToDisplay(date: string | null | undefined): string {
 watch(
   () => props.item,
   (item) => {
-    if (item) setValues({ ...item, receiving_date: isoToDisplay(item.receiving_date) } as Partial<NonConformanceLogForm>, false);
+    if (item) setValues({ ...item, receiving_date: isoToDisplay((item as any).receiving_date) } as Partial<NonConformanceLogForm>, false);
   },
   { immediate: true }
 );
 
 const onSubmit = handleSubmit((data) => mutate(data));
+
+function openPrintWindow(id: number) {
+  const url = `${window.location.origin}${window.location.pathname}#/pop/print/non-conformance-log/${id}`;
+  window.open(url, '_blank');
+}
 </script>

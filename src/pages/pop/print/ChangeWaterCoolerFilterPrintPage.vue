@@ -1,14 +1,15 @@
 <template>
   <div class="pop-print" v-if="data">
     <div class="form-header">
-      <div class="company">Agro Mix Rações</div>
+      <div class="logo-block">
+        <img src="/agromix-logo.png" alt="Agro Mix Rações" class="logo-img" />
+      </div>
       <div class="form-title-block">
-        <div class="form-title">Registro da Troca do Filtro do Bebedouro</div>
+        <div class="form-title">REGISTRO DA TROCA DO FILTRO DO BEBEDOURO</div>
         <div class="form-subtitle">Frequência: Semestral</div>
       </div>
       <div class="version-block">
         <div>Versão: 04</div>
-        <div>Ano: 2025</div>
       </div>
     </div>
     <table class="data-table">
@@ -68,13 +69,14 @@ onMounted(async () => {
 </script>
 
 <style>
-.pop-print { font-family: Arial, sans-serif; font-size: 10pt; padding: 20px; max-width: 210mm; margin: 0 auto; }
-.form-header { display: flex; border: 1px solid #000; }
-.company { padding: 8px; border-right: 1px solid #000; font-weight: bold; white-space: nowrap; writing-mode: vertical-rl; text-align: center; }
-.form-title-block { flex: 1; padding: 8px; text-align: center; border-right: 1px solid #000; }
-.form-title { font-weight: bold; font-size: 10pt; }
+.pop-print { font-family: Arial, sans-serif; font-size: 10pt; padding: 15mm; max-width: 210mm; margin: 0 auto; box-sizing: border-box; }
+.form-header { display: flex; border: 1px solid #000; align-items: stretch; }
+.logo-block { width: 18%; border-right: 1px solid #000; display: flex; align-items: center; justify-content: center; padding: 4px; flex-shrink: 0; }
+.logo-img { max-width: 100%; max-height: 70px; object-fit: contain; }
+.form-title-block { flex: 1; padding: 8px; text-align: center; border-right: 1px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.form-title { font-weight: bold; font-size: 10pt; text-transform: uppercase; }
 .form-subtitle { font-size: 9pt; margin-top: 4px; }
-.version-block { padding: 8px; text-align: center; font-size: 9pt; }
+.version-block { padding: 8px; text-align: center; font-size: 9pt; display: flex; align-items: center; white-space: nowrap; }
 .data-table { width: 100%; border-collapse: collapse; border: 1px solid #000; border-top: none; }
 .data-table th, .data-table td { border: 1px solid #000; padding: 4px 6px; }
 .data-table th { background: #f0f0f0; font-weight: bold; text-align: center; }

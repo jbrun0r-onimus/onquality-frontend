@@ -5,59 +5,35 @@
         <img src="/agromix-logo.png" alt="Agro Mix Rações" class="logo-img" />
       </div>
       <div class="form-title-block">
-        <div class="form-title">
-          PLANILHA DE FREQUÊNCIA E MONITORAMENTO DE LIMPEZA E HIGIENIZAÇÃO DAS INSTALAÇÕES, EQUIPAMENTOS E UTENSÍLIOS
-        </div>
-        <div class="form-month">Mês/ano: {{ monthLabel }}</div>
+        <div class="form-title">PLANILHA DE CONTROLE DO PROCESSO PRODUTIVO</div>
+        <div class="form-date">Data: {{ dateLabel }}</div>
       </div>
       <div class="version-block">
-        <div>PL 04</div>
-        <div>Versão: 04</div>
+        <div>PL 12</div>
+        <div>Versão: 01</div>
       </div>
     </div>
 
     <table class="main-table">
       <thead>
         <tr>
-          <th class="location-col">Áreas de Administração e Sala de Apoio</th>
-          <th v-for="d in data.days_in_month" :key="d" class="day-col">{{ d }}</th>
-          <th class="day-col">-</th>
+          <th class="col-hora">HORA</th>
+          <th class="col-produto">PRODUTO</th>
+          <th class="col-freq">FREQUÊNCIA</th>
+          <th class="col-param">PARÂMETROS MONITORADOS</th>
+          <th class="col-action">AÇÃO CORRETIVA</th>
+          <th class="col-exec">EXECUTOR</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="row in data.rows" :key="row.location">
-          <td class="location-cell">- {{ row.location }}</td>
-          <td v-for="d in data.days_in_month" :key="d" class="day-cell">
-            <span v-if="row.days[d] === true">✓</span>
-            <span v-else-if="row.days[d] === false">✗</span>
-            <span v-else>-</span>
-          </td>
-          <td class="day-cell">-</td>
+        <tr v-for="item in tableRows" :key="item.id ?? Math.random()">
+          <td class="col-hora">{{ item.time }}</td>
+          <td class="col-produto">{{ item.product }}</td>
+          <td class="col-freq">{{ item.frequency }}</td>
+          <td class="col-param">{{ item.parameter }}</td>
+          <td class="col-action">{{ item.corrective_action }}</td>
+          <td class="col-exec">{{ item.employee_name }}</td>
         </tr>
-      </tbody>
-    </table>
-
-    <div class="executed-by-row">
-      <span class="sig-label-bold">EXECUTADO POR:</span>
-      <div class="sig-content">
-        <img v-if="sigExecutedBy" :src="sigExecutedBy" class="sig-img" />
-        <span v-else class="sig-blank-line"></span>
-      </div>
-    </div>
-
-    <table class="corrective-table">
-      <thead>
-        <tr>
-          <th colspan="2" class="corrective-header">AÇÕES CORRETIVAS</th>
-        </tr>
-        <tr>
-          <th class="date-col">DATA</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td class="date-col"></td><td></td></tr>
-        <tr><td class="date-col"></td><td></td></tr>
       </tbody>
     </table>
 
@@ -86,33 +62,61 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { getMonitoringRoomMonthly } from 'src/services/pop/monitoringRoom.service';
+import { getProductionProcessDaily } from 'src/services/pop/productionProcess.service';
 import { getPopSignatures } from 'src/services/pop/popSignature.service';
-import type { MonitoringRoomMonthlyResponse } from 'src/schemas/pop/monitoringRoom.schemas';
+import type { ProductionProcessDailyResponse, ProductionProcessDailyItem } from 'src/schemas/pop/productionProcess.schemas';
+
+const MIN_ROWS = 16;
 
 const route = useRoute();
-const data = ref<MonitoringRoomMonthlyResponse | null>(null);
-const sigExecutedBy = ref<string | null>(null);
+const data = ref<ProductionProcessDailyResponse | null>(null);
 const sigMonitoredBy = ref<string | null>(null);
 const sigVerifiedBy = ref<string | null>(null);
 
+const day = computed(() => Number(route.query.day));
 const month = computed(() => Number(route.query.month));
 const year = computed(() => Number(route.query.year));
 
-const monthLabel = computed(() => {
-  if (!month.value || !year.value) return '';
-  const d = new Date(year.value, month.value - 1, 1);
-  return format(d, 'MMMM/yyyy', { locale: ptBR }).replace(/^\w/, (c: string) => c.toUpperCase());
+const dateLabel = computed(() => {
+  if (!day.value || !month.value || !year.value) return '';
+  const d = new Date(year.value, month.value - 1, day.value);
+  return format(d, "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
+});
+
+interface TableRow {
+  id: number | null;
+  time: string;
+  product: string;
+  frequency: string;
+  parameter: string;
+  corrective_action: string;
+  employee_name: string;
+}
+
+const tableRows = computed<TableRow[]>(() => {
+  const items: TableRow[] = (data.value?.items ?? []).map((item: ProductionProcessDailyItem) => ({
+    id: item.id,
+    time: item.execution_date ? item.execution_date.split(' ')[1] ?? '' : '',
+    product: item.product ?? '',
+    frequency: item.frequency ?? '',
+    parameter: item.parameter ?? '',
+    corrective_action: item.corrective_action ?? '',
+    employee_name: item.employee_name ?? '',
+  }));
+  const padCount = Math.max(0, MIN_ROWS - items.length);
+  for (let i = 0; i < padCount; i++) {
+    items.push({ id: null, time: '', product: '', frequency: '', parameter: '', corrective_action: '', employee_name: '' });
+  }
+  return items;
 });
 
 onMounted(async () => {
-  const popId = year.value * 100 + month.value;
-  const [monthlyData, sigs] = await Promise.all([
-    getMonitoringRoomMonthly(month.value, year.value),
-    getPopSignatures('monitoring-room-monthly', popId),
+  const popId = year.value * 10000 + month.value * 100 + day.value;
+  const [dailyData, sigs] = await Promise.all([
+    getProductionProcessDaily(day.value, month.value, year.value),
+    getPopSignatures('production-process-daily', popId),
   ]);
-  data.value = monthlyData;
-  sigExecutedBy.value = sigs.find((s) => s.field_name === 'executed_by')?.url ?? null;
+  data.value = dailyData;
   sigMonitoredBy.value = sigs.find((s) => s.field_name === 'monitored_by')?.url ?? null;
   sigVerifiedBy.value = sigs.find((s) => s.field_name === 'verified_by')?.url ?? null;
   setTimeout(() => window.print(), 800);
@@ -165,12 +169,12 @@ body { margin: 0; padding: 0; }
 
 .form-title {
   font-weight: bold;
-  font-size: 8pt;
+  font-size: 9pt;
   text-transform: uppercase;
   line-height: 1.3;
 }
 
-.form-month {
+.form-date {
   font-size: 9pt;
   margin-top: 4px;
   font-weight: bold;
@@ -199,51 +203,41 @@ body { margin: 0; padding: 0; }
 .main-table th,
 .main-table td {
   border: 1px solid #000;
-  padding: 2px 2px;
-  text-align: center;
+  padding: 3px 4px;
+  vertical-align: middle;
 }
 
 .main-table thead th {
   background: #e0e0e0;
   font-weight: bold;
-  font-size: 7pt;
-}
-
-.location-col {
-  text-align: left !important;
-  min-width: 130px;
+  text-align: center;
   font-size: 7.5pt;
-  padding-left: 4px !important;
 }
 
-.location-cell {
-  text-align: left !important;
-  padding-left: 4px !important;
+.main-table tbody td {
+  height: 18px;
   font-size: 8pt;
 }
 
-.day-col {
-  min-width: 14px;
-  max-width: 18px;
-  font-size: 6.5pt;
-  padding: 2px 1px !important;
+.col-hora { width: 50px; text-align: center; }
+.col-produto { width: 100px; }
+.col-freq { width: 80px; }
+.col-param { }
+.col-action { width: 130px; }
+.col-exec { width: 90px; }
+
+.signatures {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.day-cell {
-  min-width: 14px;
-  max-width: 18px;
-  padding: 2px 1px !important;
-  font-size: 7.5pt;
-}
-
-.executed-by-row {
+.sig-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 8px 0;
-  font-size: 9pt;
   border: 1px solid #000;
   padding: 4px 8px;
+  gap: 8px;
   min-height: 36px;
 }
 
@@ -271,50 +265,6 @@ body { margin: 0; padding: 0; }
   border-bottom: 1px solid #999;
   display: block;
   min-width: 100px;
-}
-
-.corrective-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #000;
-  margin-bottom: 8px;
-  font-size: 8pt;
-}
-
-.corrective-table th,
-.corrective-table td {
-  border: 1px solid #000;
-  padding: 4px 6px;
-}
-
-.corrective-header {
-  text-align: center;
-  font-weight: bold;
-  background: #e0e0e0;
-}
-
-.date-col {
-  width: 80px;
-  text-align: center;
-}
-
-.corrective-table tbody tr td {
-  height: 20px;
-}
-
-.signatures {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.sig-row {
-  display: flex;
-  align-items: center;
-  border: 1px solid #000;
-  padding: 4px 8px;
-  gap: 8px;
-  min-height: 36px;
 }
 
 .loading {

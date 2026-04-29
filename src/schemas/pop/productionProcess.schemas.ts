@@ -33,3 +33,21 @@ export const productionProcessDetailSchema = productionProcessFormSchema.shape({
 });
 
 export type ProductionProcessDetail = InferType<typeof productionProcessDetailSchema>;
+
+export interface ProductionProcessDailyItem {
+  id: number;
+  product: string | null;
+  frequency: string | null;
+  execution_date: string | null; // dd-MM-yyyy HH:mm
+  parameter: string | null;
+  note: string | null;
+  corrective_action: string | null;
+  employee_name: string | null;
+}
+
+export interface ProductionProcessDailyResponse {
+  day: number;
+  month: number;
+  year: number;
+  items: ProductionProcessDailyItem[];
+}

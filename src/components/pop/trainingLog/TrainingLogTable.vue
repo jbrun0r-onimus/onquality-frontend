@@ -5,14 +5,6 @@
     :params="params"
     @update:params="$emit('update:params', $event)"
   >
-    <template v-slot:body-cell-is_present="{ col, row }">
-      <q-td :props="{ col }">
-        <q-badge
-          :color="row.is_present ? 'positive' : 'negative'"
-          :label="row.is_present ? $t('pop.common.sim') : $t('pop.common.nao')"
-        />
-      </q-td>
-    </template>
     <template v-slot:body-cell-actions="{ col, row }">
       <generic-actions-cell
         :col="col"
@@ -25,7 +17,7 @@
         :delete-action="() => deleteTrainingLog(row.id)"
         delete-confirm
         :delete-confirm-title="$t('pop.trainingLog.titles.delete')"
-        :delete-confirm-message="$t('pop.trainingLog.misc.deleteConfirmation', { name: row.employee_name })"
+        :delete-confirm-message="$t('pop.trainingLog.misc.deleteConfirmation')"
         :invalidate="trainingLogsQuery"
       />
     </template>
@@ -39,6 +31,7 @@ import { useI18n } from 'vue-i18n';
 import {
   trainingLogsQuery,
   deleteTrainingLog,
+  fromIsoDate,
 } from 'src/services/pop/trainingLog.service';
 import {
   TrainingLogListItem,
@@ -56,15 +49,27 @@ const $q = useQuasar();
 
 const columns = computed<QTableColumn<TrainingLogListItem>[]>(() => [
   {
-    name: 'employee_name',
-    label: t('pop.trainingLog.fields.employeeName'),
-    field: 'employee_name',
+    name: 'execution_date',
+    label: t('pop.trainingLog.fields.executionDate'),
+    field: (row: TrainingLogListItem) => fromIsoDate(row.execution_date) || '-',
     align: 'left',
   },
   {
-    name: 'is_present',
-    label: t('pop.trainingLog.fields.isPresent'),
-    field: () => undefined,
+    name: 'instructor',
+    label: t('pop.trainingLog.fields.instructor'),
+    field: 'instructor',
+    align: 'left',
+  },
+  {
+    name: 'workload',
+    label: t('pop.trainingLog.fields.workload'),
+    field: 'workload',
+    align: 'left',
+  },
+  {
+    name: 'participant_count',
+    label: t('pop.trainingLog.misc.participants'),
+    field: 'participant_count',
     align: 'center',
   },
   {

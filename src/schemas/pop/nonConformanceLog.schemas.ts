@@ -3,11 +3,13 @@ import { paginationRequestSchema } from 'src/schemas/pagination.schemas';
 
 export const nonConformanceLogFormSchema = object({
   product: string().trim().required().max(70),
-  address: string().trim().required().max(70),
+  supplier: string().trim().nullable().max(70).default(null),
+  address: string().trim().nullable().max(70).default(null),
   receiving_date: string().trim().required(),
   map_record: string().trim().nullable().max(30).default(null),
   details: string().trim().required(),
-  deadline: string().trim().required().max(70),
+  corrective_action: string().trim().nullable().max(5000).default(null),
+  deadline: string().trim().nullable().max(70).default(null),
   is_approved: boolean().required().default(false),
   notes: string().trim().nullable().max(5000).default(null),
 });
@@ -17,9 +19,9 @@ export type NonConformanceLogForm = InferType<typeof nonConformanceLogFormSchema
 export const nonConformanceLogListItemSchema = object({
   id: number().required(),
   product: string().required(),
-  address: string().required(),
+  address: string().nullable().default(null),
   receiving_date: string().required(),
-  is_approved: boolean().required(),
+  is_approved: boolean().nullable().default(null),
   created_at: string().required(),
 });
 

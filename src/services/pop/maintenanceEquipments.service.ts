@@ -6,6 +6,7 @@ import {
   MaintenanceEquipmentsListItem,
   MaintenanceEquipmentsListRequest,
   MaintenanceEquipmentsDetail,
+  MaintenanceEquipmentsMonthlyResponse,
 } from 'src/schemas/pop/maintenanceEquipments.schemas';
 import { definePaginatedQuery, defineQuery } from 'src/helpers/query.helpers';
 
@@ -18,11 +19,14 @@ function toIsoDate(ddmmyyyy: string): string {
   }
 }
 
-function fromIsoDate(isoDate: string): string {
+function fromIsoDate(apiDate: string): string {
+  if (!apiDate) return '';
   try {
-    return format(new Date(isoDate), 'dd/MM/yyyy');
+    const parsed = parse(apiDate, 'dd-MM-yyyy', new Date());
+    if (parsed.getFullYear() < 100) parsed.setFullYear(parsed.getFullYear() + 2000);
+    return format(parsed, 'dd/MM/yyyy');
   } catch {
-    return isoDate;
+    return apiDate;
   }
 }
 
@@ -94,3 +98,22 @@ export const maintenanceEquipmentsDetailQuery = defineQuery(
   'maintenance-equipments-detail',
   getMaintenanceEquipmentItem
 );
+
+export async function getMaintenanceEquipmentsMonthly(
+  month: number,
+  year: number
+): Promise<MaintenanceEquipmentsMonthlyResponse> {
+  const response = await api.get('/onquality/maintenance_equipments/monthly', {
+    params: { month, year },
+  });
+  return response.data;
+}
+
+export function fromIsoDateDisplay(apiDate: string | null | undefined): string {
+  if (!apiDate) return '';
+  try {
+    const d = parse(apiDate, 'dd-MM-yyyy', new Date());
+    if (d.getFullYear() < 100) d.setFullYear(d.getFullYear() + 2000);
+    return format(d, 'dd/MM/yyyy');
+  } catch { return apiDate ?? ''; }
+}

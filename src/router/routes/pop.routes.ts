@@ -11,6 +11,7 @@ export const popPrintRoute: RouteRecordRaw = {
     { path: 'monitoring-room/:id', component: () => import('pages/pop/print/MonitoringRoomPrintPage.vue') },
     { path: 'monitoring-room-monthly', component: () => import('pages/pop/print/MonitoringRoomMonthlyPrintPage.vue') },
     { path: 'monitoring-equipments/:id', component: () => import('pages/pop/print/MonitoringEquipmentsPrintPage.vue') },
+    { path: 'monitoring-equipments-monthly', component: () => import('pages/pop/print/MonitoringEquipmentsMonthlyPrintPage.vue') },
     { path: 'training-log/:id', component: () => import('pages/pop/print/TrainingLogPrintPage.vue') },
     { path: 'water-cooler-sanitization/:id', component: () => import('pages/pop/print/WaterCoolerSanitizationPrintPage.vue') },
     { path: 'change-water-cooler-filter/:id', component: () => import('pages/pop/print/ChangeWaterCoolerFilterPrintPage.vue') },
@@ -18,6 +19,9 @@ export const popPrintRoute: RouteRecordRaw = {
     { path: 'maintenance-control/:id', component: () => import('pages/pop/print/MaintenanceControlPrintPage.vue') },
     { path: 'cleaning-supplies-control/:id', component: () => import('pages/pop/print/CleaningSuppliesControlPrintPage.vue') },
     { path: 'check-list-pest/:id', component: () => import('pages/pop/print/CheckListPestPrintPage.vue') },
+    { path: 'maintenance-equipments-monthly', component: () => import('pages/pop/print/MaintenanceEquipmentsMonthlyPrintPage.vue') },
+    { path: 'production-process-daily', component: () => import('pages/pop/print/ProductionProcessDailyPrintPage.vue') },
+    { path: 'non-conformance-log/:id', component: () => import('pages/pop/print/NonConformanceLogPrintPage.vue') },
   ],
 };
 
@@ -72,6 +76,15 @@ export const popRoute: RouteRecordRaw = {
       meta: {
         name: (i18n: any) => i18n.t('pop.monitoringEquipments.titles.list'),
         icon: 'o_precision_manufacturing',
+      },
+    },
+    {
+      name: 'pop.monitoringEquipmentsMonthly',
+      path: 'monitoring-equipments-monthly',
+      component: () => import('pages/pop/MonitoringEquipmentsMonthlyPage.vue'),
+      meta: {
+        name: (i18n: any) => i18n.t('pop.monitoringEquipments.titles.monthly'),
+        icon: 'o_calendar_month',
       },
     },
     {
@@ -156,12 +169,30 @@ export const popRoute: RouteRecordRaw = {
       },
     },
     {
+      name: 'pop.maintenanceEquipmentsMonthly',
+      path: 'maintenance-equipments-monthly',
+      component: () => import('pages/pop/MaintenanceEquipmentsMonthlyPage.vue'),
+      meta: {
+        name: (i18n: any) => i18n.t('pop.maintenanceEquipmentsPop.titles.monthly'),
+        icon: 'o_calendar_month',
+      },
+    },
+    {
       name: 'pop.productionProcess',
       path: 'production-process',
       component: () => import('pages/pop/ProductionProcessPage.vue'),
       meta: {
         name: (i18n: any) => i18n.t('pop.productionProcess.titles.list'),
         icon: 'o_factory',
+      },
+    },
+    {
+      name: 'pop.productionProcessDaily',
+      path: 'production-process-daily',
+      component: () => import('pages/pop/ProductionProcessDailyPage.vue'),
+      meta: {
+        name: (i18n: any) => i18n.t('pop.productionProcess.titles.daily'),
+        icon: 'o_today',
       },
     },
     {

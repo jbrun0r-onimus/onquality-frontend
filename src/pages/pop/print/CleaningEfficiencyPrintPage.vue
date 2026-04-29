@@ -40,7 +40,9 @@
         <tbody>
           <tr>
             <th class="footer-th">MONITORADO POR:</th>
-            <td class="footer-td"></td>
+            <td class="footer-td">
+              <img v-if="sigMonitoredBy" :src="sigMonitoredBy" class="sig-img" />
+            </td>
           </tr>
         </tbody>
       </table>
@@ -48,7 +50,9 @@
         <tbody>
           <tr>
             <th class="footer-th">VERIFICADO POR:</th>
-            <td class="footer-td"></td>
+            <td class="footer-td">
+              <img v-if="sigVerifiedBy" :src="sigVerifiedBy" class="sig-img" />
+            </td>
           </tr>
           <tr>
             <th class="footer-th obs-th">OBSERVAÇÕES:</th>
@@ -65,10 +69,13 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { getCleaningEfficiency } from 'src/services/pop/cleaningEfficiency.service';
+import { getPopSignatures } from 'src/services/pop/popSignature.service';
 import type { CleaningEfficiencyDetail } from 'src/schemas/pop/cleaningEfficiency.schemas';
 
 const route = useRoute();
 const data = ref<CleaningEfficiencyDetail | null>(null);
+const sigMonitoredBy = ref<string | null>(null);
+const sigVerifiedBy = ref<string | null>(null);
 
 const questions = [
   'Os produtos de higienização/desinfecção são aprovados pelos órgãos competentes (ANVISA ou Vigilância Sanitária)?',
@@ -91,7 +98,13 @@ function getQValue(num: number): boolean | null | undefined {
 
 onMounted(async () => {
   const id = Number(route.params.id);
-  data.value = await getCleaningEfficiency(id);
+  const [detail, sigs] = await Promise.all([
+    getCleaningEfficiency(id),
+    getPopSignatures('cleaning-efficiency', id),
+  ]);
+  data.value = detail;
+  sigMonitoredBy.value = sigs.find((s) => s.field_name === 'monitored_by')?.url ?? null;
+  sigVerifiedBy.value = sigs.find((s) => s.field_name === 'verified_by')?.url ?? null;
   const prevTitle = document.title;
   setTimeout(() => {
     document.title = '';
@@ -132,6 +145,7 @@ onMounted(async () => {
 .footer-table { width: 100%; border-collapse: collapse; border: 1px solid #000; }
 .footer-th { background: #f0f0f0; border: 1px solid #000; padding: 2px 8px; font-size: 9pt; font-weight: bold; text-align: left; white-space: nowrap; width: 1%; vertical-align: middle; }
 .footer-td { border: 1px solid #000; padding: 2px 8px; height: 1.4em; vertical-align: middle; font-size: 9pt; }
+.sig-img { max-height: 32px; max-width: 200px; object-fit: contain; display: block; }
 .obs-th { vertical-align: middle; }
 .footer-td-obs { height: 5em; vertical-align: top; padding: 4px 8px; }
 

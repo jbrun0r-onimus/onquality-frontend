@@ -23,7 +23,7 @@ function toIsoDate(ddmmyyyy: string): string {
 /** Converts from ISO datetime to DD/MM/YYYY (for filling the form) */
 function fromIsoDate(isoDate: string): string {
   try {
-    return format(new Date(isoDate), 'dd/MM/yyyy');
+    return format(parse(isoDate, 'dd-MM-yyyy', new Date()), 'dd/MM/yyyy');
   } catch {
     return isoDate;
   }

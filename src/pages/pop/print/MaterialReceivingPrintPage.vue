@@ -88,7 +88,9 @@
       <tbody>
         <tr>
           <td class="sig-label">MONITORADO POR:</td>
-          <td class="sig-line"></td>
+          <td class="sig-line">
+            <img v-if="sigMonitoredBy" :src="sigMonitoredBy" class="sig-img" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -98,7 +100,9 @@
       <tbody>
         <tr>
           <td class="sig-label">VERIFICADO POR:</td>
-          <td class="sig-line"></td>
+          <td class="sig-line">
+            <img v-if="sigVerifiedBy" :src="sigVerifiedBy" class="sig-img" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -111,10 +115,13 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { getMaterialReceiving } from 'src/services/pop/materialReceiving.service';
+import { getPopSignatures } from 'src/services/pop/popSignature.service';
 import type { MaterialReceivingDetail } from 'src/schemas/pop/materialReceiving.schemas';
 
 const route = useRoute();
 const data = ref<MaterialReceivingDetail | null>(null);
+const sigMonitoredBy = ref<string | null>(null);
+const sigVerifiedBy = ref<string | null>(null);
 const currentYear = new Date().getFullYear();
 
 function formatBoolCNC(val: boolean | null | undefined): string {
@@ -125,7 +132,13 @@ function formatBoolCNC(val: boolean | null | undefined): string {
 
 onMounted(async () => {
   const id = Number(route.params.id);
-  data.value = await getMaterialReceiving(id);
+  const [detail, sigs] = await Promise.all([
+    getMaterialReceiving(id),
+    getPopSignatures('material-receiving', id),
+  ]);
+  data.value = detail;
+  sigMonitoredBy.value = sigs.find((s) => s.field_name === 'monitored_by')?.url ?? null;
+  sigVerifiedBy.value = sigs.find((s) => s.field_name === 'verified_by')?.url ?? null;
   setTimeout(() => window.print(), 800);
 });
 </script>
@@ -282,6 +295,13 @@ onMounted(async () => {
 
 .sig-line {
   min-width: 80px;
+}
+
+.sig-img {
+  max-height: 32px;
+  max-width: 200px;
+  object-fit: contain;
+  display: block;
 }
 
 /* ─── Loading ──────────────────────────────────────────────────────────────── */

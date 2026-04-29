@@ -100,6 +100,29 @@
       </div>
 
       <card-page-section v-if="props.item">
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-sm-6">
+            <signature-field
+              pop-type="maintenance-control"
+              :pop-id="props.item.id"
+              field-name="monitored_by"
+              :label="$t('pop.common.monitoredBy')"
+              :readonly="readonly"
+            />
+          </div>
+          <div class="col-12 col-sm-6">
+            <signature-field
+              pop-type="maintenance-control"
+              :pop-id="props.item.id"
+              field-name="verified_by"
+              :label="$t('pop.common.verifiedBy')"
+              :readonly="readonly"
+            />
+          </div>
+        </div>
+      </card-page-section>
+
+      <card-page-section v-if="props.item">
         <pop-evidence-section
           pop-type="maintenance-control"
           :pop-id="props.item?.id"
@@ -160,6 +183,7 @@ import DateField from 'src/components/form/DateField.vue';
 import AppButton from 'src/components/misc/AppButton';
 import SpinnerAndRetry from 'src/components/misc/SpinnerAndRetry.vue';
 import PopEvidenceSection from 'src/components/pop/evidence/PopEvidenceSection.vue';
+import SignatureField from 'src/components/pop/signature/SignatureField.vue';
 
 const props = defineProps<{
   item?: MaintenanceControlListItem;

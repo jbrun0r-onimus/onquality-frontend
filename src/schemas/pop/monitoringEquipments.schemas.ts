@@ -29,3 +29,15 @@ export const monitoringEquipmentsDetailSchema = monitoringEquipmentsFormSchema.s
 });
 
 export type MonitoringEquipmentsDetail = InferType<typeof monitoringEquipmentsDetailSchema>;
+
+export type MonitoringEquipmentsMonthlyRow = {
+  equipment: string;
+  days: Record<number, boolean | null>;
+};
+
+export type MonitoringEquipmentsMonthlyResponse = {
+  month: number;
+  year: number;
+  days_in_month: number;
+  rows: MonitoringEquipmentsMonthlyRow[];
+};

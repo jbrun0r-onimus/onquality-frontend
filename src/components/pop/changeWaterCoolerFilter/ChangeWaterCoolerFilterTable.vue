@@ -28,7 +28,7 @@
 import { computed } from 'vue';
 import { QTableColumn, useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import {
   changeWaterCoolerFiltersQuery,
@@ -54,7 +54,7 @@ const columns = computed<QTableColumn<ChangeWaterCoolerFilterListItem>[]>(() => 
     label: t('pop.changeWaterCoolerFilter.fields.executionDate'),
     field: (row) => {
       try {
-        return format(new Date(row.execution_date), 'dd/MM/yyyy', { locale: ptBR });
+        return format(parse(row.execution_date, 'dd-MM-yyyy', new Date()), 'dd/MM/yyyy', { locale: ptBR });
       } catch {
         return row.execution_date;
       }

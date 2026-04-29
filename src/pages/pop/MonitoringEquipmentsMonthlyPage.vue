@@ -1,5 +1,5 @@
 <template>
-  <card-page :title="$t('pop.monitoringRoom.titles.monthly')">
+  <card-page :title="$t('pop.monitoringEquipments.titles.monthly')">
     <card-page-section>
       <div class="row q-col-gutter-x-md q-col-gutter-y-sm items-center q-mb-md">
         <div class="col-auto">
@@ -8,7 +8,7 @@
             dense
             readonly
             :model-value="monthLabel"
-            :label="$t('pop.monitoringRoom.monthly.selectMonth')"
+            :label="$t('pop.monitoringEquipments.monthly.selectMonth')"
             style="min-width: 180px"
           >
             <template #append>
@@ -34,7 +34,7 @@
           <app-button
             icon="o_picture_as_pdf"
             color="red-7"
-            :label="$t('pop.monitoringRoom.monthly.exportPdf')"
+            :label="$t('pop.monitoringEquipments.monthly.exportPdf')"
             @click="openPrintWindow"
           />
         </div>
@@ -52,13 +52,13 @@
             <table class="monthly-table">
               <thead>
                 <tr>
-                  <th class="location-col">{{ $t('pop.monitoringRoom.fields.location') }}</th>
+                  <th class="location-col">{{ $t('pop.monitoringEquipments.fields.equipment') }}</th>
                   <th v-for="d in data.days_in_month" :key="d" class="day-col">{{ d }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="row in orderedRows" :key="row.location">
-                  <td class="location-cell">{{ row.location }}</td>
+                <tr v-for="row in data.rows" :key="row.equipment">
+                  <td class="location-cell">{{ row.equipment }}</td>
                   <td v-for="d in data.days_in_month" :key="d" class="day-cell">
                     <span v-if="row.days[d] === true" class="text-positive">✓</span>
                     <span v-else-if="row.days[d] === false" class="text-negative">✗</span>
@@ -78,26 +78,26 @@
         <div class="row q-col-gutter-md">
           <div class="col-12 col-sm-4">
             <signature-field
-              pop-type="monitoring-room-monthly"
+              pop-type="monitoring-equipments-monthly"
               :pop-id="monthlyPopId"
               field-name="executed_by"
-              :label="$t('pop.monitoringRoom.monthly.executedBy')"
+              :label="$t('pop.monitoringEquipments.monthly.executedBy')"
             />
           </div>
           <div class="col-12 col-sm-4">
             <signature-field
-              pop-type="monitoring-room-monthly"
+              pop-type="monitoring-equipments-monthly"
               :pop-id="monthlyPopId"
               field-name="monitored_by"
-              :label="$t('pop.monitoringRoom.monthly.monitoredBy')"
+              :label="$t('pop.monitoringEquipments.monthly.monitoredBy')"
             />
           </div>
           <div class="col-12 col-sm-4">
             <signature-field
-              pop-type="monitoring-room-monthly"
+              pop-type="monitoring-equipments-monthly"
               :pop-id="monthlyPopId"
               field-name="verified_by"
-              :label="$t('pop.monitoringRoom.monthly.verifiedBy')"
+              :label="$t('pop.monitoringEquipments.monthly.verifiedBy')"
             />
           </div>
         </div>
@@ -115,8 +115,8 @@ import CardPage from 'src/components/layout/CardPage.vue';
 import CardPageSection from 'src/components/layout/CardPageSection.vue';
 import AppButton from 'src/components/misc/AppButton/AppButton.vue';
 import SignatureField from 'src/components/pop/signature/SignatureField.vue';
-import { getMonitoringRoomMonthly } from 'src/services/pop/monitoringRoom.service';
-import type { MonitoringRoomMonthlyResponse } from 'src/schemas/pop/monitoringRoom.schemas';
+import { getMonitoringEquipmentsMonthly } from 'src/services/pop/monitoringEquipments.service';
+import type { MonitoringEquipmentsMonthlyResponse } from 'src/schemas/pop/monitoringEquipments.schemas';
 
 const now = new Date();
 const selectedMonth = ref(now.getMonth() + 1);
@@ -136,15 +136,13 @@ function onDateChange(val: string) {
   if (m) selectedMonth.value = m;
 }
 
-const { data, isLoading, error } = useQuery<MonitoringRoomMonthlyResponse>(
-  computed(() => ['monitoring-room-monthly', selectedMonth.value, selectedYear.value]),
-  () => getMonitoringRoomMonthly(selectedMonth.value, selectedYear.value)
+const { data, isLoading, error } = useQuery<MonitoringEquipmentsMonthlyResponse>(
+  computed(() => ['monitoring-equipments-monthly', selectedMonth.value, selectedYear.value]),
+  () => getMonitoringEquipmentsMonthly(selectedMonth.value, selectedYear.value)
 );
 
-const orderedRows = computed(() => data.value?.rows ?? []);
-
 function openPrintWindow() {
-  const url = `${window.location.origin}${window.location.pathname}#/pop/print/monitoring-room-monthly?month=${selectedMonth.value}&year=${selectedYear.value}`;
+  const url = `${window.location.origin}${window.location.pathname}#/pop/print/monitoring-equipments-monthly?month=${selectedMonth.value}&year=${selectedYear.value}`;
   window.open(url, '_blank');
 }
 </script>

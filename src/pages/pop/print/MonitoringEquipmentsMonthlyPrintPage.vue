@@ -19,14 +19,14 @@
     <table class="main-table">
       <thead>
         <tr>
-          <th class="location-col">Áreas de Administração e Sala de Apoio</th>
+          <th class="location-col">EQUIPAMENTOS E UTENSÍLIOS</th>
           <th v-for="d in data.days_in_month" :key="d" class="day-col">{{ d }}</th>
           <th class="day-col">-</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="row in data.rows" :key="row.location">
-          <td class="location-cell">- {{ row.location }}</td>
+        <tr v-for="row in data.rows" :key="row.equipment">
+          <td class="location-cell">{{ row.equipment }}</td>
           <td v-for="d in data.days_in_month" :key="d" class="day-cell">
             <span v-if="row.days[d] === true">✓</span>
             <span v-else-if="row.days[d] === false">✗</span>
@@ -86,12 +86,12 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { getMonitoringRoomMonthly } from 'src/services/pop/monitoringRoom.service';
+import { getMonitoringEquipmentsMonthly } from 'src/services/pop/monitoringEquipments.service';
 import { getPopSignatures } from 'src/services/pop/popSignature.service';
-import type { MonitoringRoomMonthlyResponse } from 'src/schemas/pop/monitoringRoom.schemas';
+import type { MonitoringEquipmentsMonthlyResponse } from 'src/schemas/pop/monitoringEquipments.schemas';
 
 const route = useRoute();
-const data = ref<MonitoringRoomMonthlyResponse | null>(null);
+const data = ref<MonitoringEquipmentsMonthlyResponse | null>(null);
 const sigExecutedBy = ref<string | null>(null);
 const sigMonitoredBy = ref<string | null>(null);
 const sigVerifiedBy = ref<string | null>(null);
@@ -108,8 +108,8 @@ const monthLabel = computed(() => {
 onMounted(async () => {
   const popId = year.value * 100 + month.value;
   const [monthlyData, sigs] = await Promise.all([
-    getMonitoringRoomMonthly(month.value, year.value),
-    getPopSignatures('monitoring-room-monthly', popId),
+    getMonitoringEquipmentsMonthly(month.value, year.value),
+    getPopSignatures('monitoring-equipments-monthly', popId),
   ]);
   data.value = monthlyData;
   sigExecutedBy.value = sigs.find((s) => s.field_name === 'executed_by')?.url ?? null;

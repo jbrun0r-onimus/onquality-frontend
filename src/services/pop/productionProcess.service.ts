@@ -6,6 +6,7 @@ import {
   ProductionProcessListItem,
   ProductionProcessListRequest,
   ProductionProcessDetail,
+  ProductionProcessDailyResponse,
 } from 'src/schemas/pop/productionProcess.schemas';
 import { definePaginatedQuery, defineQuery } from 'src/helpers/query.helpers';
 
@@ -99,3 +100,14 @@ export const productionProcessDetailQuery = defineQuery(
   'production-process-detail',
   getProductionProcess
 );
+
+export async function getProductionProcessDaily(
+  day: number,
+  month: number,
+  year: number
+): Promise<ProductionProcessDailyResponse> {
+  const response = await api.get('/onquality/production_process/daily', {
+    params: { day, month, year },
+  });
+  return response.data;
+}

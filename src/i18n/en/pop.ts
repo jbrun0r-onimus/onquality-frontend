@@ -8,6 +8,8 @@ export const pop = {
     condition: 'Condition',
     createdAt: 'Created at',
     exportPdf: 'Export PDF',
+    monitoredBy: 'Monitored by',
+    verifiedBy: 'Verified by',
     evidences: 'Photo Evidence / Records',
     addEvidences: 'Add Photos',
     takePhoto: 'Take Photo',
@@ -145,10 +147,18 @@ export const pop = {
   monitoringEquipments: {
     titles: {
       list: 'Cleaning Frequency - Equipment',
+      monthly: 'Monthly Spreadsheet - Equipment',
       details: 'Monitoring Details',
       new: 'New Cleaning Record',
       edit: 'Edit Record',
       delete: 'Delete Record',
+    },
+    monthly: {
+      selectMonth: 'Select Month/Year',
+      exportPdf: 'Export PDF',
+      executedBy: 'EXECUTED BY',
+      monitoredBy: 'MONITORED BY',
+      verifiedBy: 'VERIFIED BY',
     },
     fields: {
       executionDate: 'Execution Date',
@@ -212,11 +222,21 @@ export const pop = {
       delete: 'Delete Log',
     },
     fields: {
+      executionDate: 'Date',
+      instructor: 'Instructor',
+      professionalFormation: 'Professional Background',
+      programmaticContent: 'Programmatic Content',
+      workload: 'Workload',
+      note: 'Notes',
       employeeName: 'Employee Name',
       isPresent: 'Present',
     },
     misc: {
-      deleteConfirmation: 'Are you sure you want to delete the log for "{name}"?',
+      deleteConfirmation: 'Are you sure you want to delete this training log?',
+      participants: 'Participants',
+      addParticipant: 'Add Employee',
+      noParticipants: 'No employees added.',
+      participantSignatures: 'Participant Signatures',
     },
     feedback: {
       created: 'Log created successfully.',
@@ -358,10 +378,15 @@ export const pop = {
   maintenanceEquipmentsPop: {
     titles: {
       list: 'Equipment and Instrument Maintenance',
+      monthly: 'Equipment Maintenance – Monthly',
       details: 'Maintenance Details',
       new: 'New Maintenance',
       edit: 'Edit Maintenance',
       delete: 'Delete Maintenance',
+    },
+    monthly: {
+      selectMonth: 'Month/Year',
+      exportPdf: 'Export PDF',
     },
     fields: {
       executionDate: 'Date',
@@ -387,10 +412,17 @@ export const pop = {
   productionProcess: {
     titles: {
       list: 'Production Process Control',
+      daily: 'Production Process – Daily',
       details: 'Process Details',
       new: 'New Process Record',
       edit: 'Edit Process',
       delete: 'Delete Process',
+    },
+    daily: {
+      selectDay: 'Day/Month/Year',
+      exportPdf: 'Export PDF',
+      monitoredBy: 'Monitored by',
+      verifiedBy: 'Verified by',
     },
     fields: {
       product: 'Product',
@@ -399,6 +431,7 @@ export const pop = {
       parameter: 'Parameter Record',
       note: 'Corrective Measures',
       employeeName: 'Executor',
+      correctiveAction: 'Corrective Action',
     },
     misc: {
       deleteConfirmation: 'Are you sure you want to delete this process record?',
@@ -457,14 +490,18 @@ export const pop = {
       delete: 'Delete Non-Conformance',
     },
     fields: {
-      product: 'Product',
+      product: 'Product/Supplier',
+      supplier: 'Supplier',
       address: 'Address',
       receivingDate: 'Receiving Date',
-      mapRecord: 'Map Record No.',
+      mapRecord: 'MAPA Record No.',
       details: 'Non-Conformance Detected',
+      correctiveAction: 'Corrective Action',
       deadline: 'Compliance Deadline',
       isApproved: 'Re-approved?',
-      notes: 'Corrective Action / Notes',
+      notes: 'Notes / Observations',
+      monitoredBy: 'Monitored by',
+      verifiedBy: 'Verified by',
     },
     misc: {
       deleteConfirmation: 'Are you sure you want to delete this non-conformance record?',

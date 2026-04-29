@@ -33,3 +33,18 @@ export const maintenanceEquipmentsDetailSchema = maintenanceEquipmentsFormSchema
 });
 
 export type MaintenanceEquipmentsDetail = InferType<typeof maintenanceEquipmentsDetailSchema>;
+
+export type MaintenanceEquipmentsMonthlyItem = {
+  id: number;
+  execution_date: string | null;
+  is_corrective: boolean | null;
+  descriptions: string | null;
+  executed_by: string | null;
+  is_ok: boolean | null;
+};
+
+export type MaintenanceEquipmentsMonthlyResponse = {
+  month: number;
+  year: number;
+  items: MaintenanceEquipmentsMonthlyItem[];
+};

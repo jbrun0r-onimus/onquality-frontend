@@ -77,7 +77,9 @@
       <tbody>
         <tr>
           <td class="sig-label">MONITORADO POR:</td>
-          <td class="sig-line"></td>
+          <td class="sig-line">
+            <img v-if="sigMonitoredBy" :src="sigMonitoredBy" class="sig-img" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -87,7 +89,9 @@
       <tbody>
         <tr>
           <td class="sig-label">VERIFICADO POR:</td>
-          <td class="sig-line"></td>
+          <td class="sig-line">
+            <img v-if="sigVerifiedBy" :src="sigVerifiedBy" class="sig-img" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -100,16 +104,30 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { getCleaningSuppliesControl } from 'src/services/pop/cleaningSuppliesControl.service';
+import { getPopSignatures } from 'src/services/pop/popSignature.service';
 import type { CleaningSuppliesControlDetail } from 'src/schemas/pop/cleaningSuppliesControl.schemas';
 
 const route = useRoute();
 const data = ref<CleaningSuppliesControlDetail | null>(null);
+const sigMonitoredBy = ref<string | null>(null);
+const sigVerifiedBy = ref<string | null>(null);
 const currentYear = new Date().getFullYear();
 
 onMounted(async () => {
   const id = Number(route.params.id);
-  data.value = await getCleaningSuppliesControl(id);
-  setTimeout(() => window.print(), 800);
+  const [detail, sigs] = await Promise.all([
+    getCleaningSuppliesControl(id),
+    getPopSignatures('cleaning-supplies-control', id),
+  ]);
+  data.value = detail;
+  sigMonitoredBy.value = sigs.find((s) => s.field_name === 'monitored_by')?.url ?? null;
+  sigVerifiedBy.value = sigs.find((s) => s.field_name === 'verified_by')?.url ?? null;
+  const prevTitle = document.title;
+  setTimeout(() => {
+    document.title = '';
+    window.print();
+    document.title = prevTitle;
+  }, 800);
 });
 </script>
 
@@ -264,6 +282,13 @@ onMounted(async () => {
 
 .sig-line {
   min-width: 80px;
+}
+
+.sig-img {
+  max-height: 32px;
+  max-width: 200px;
+  object-fit: contain;
+  display: block;
 }
 
 /* ─── Loading ──────────────────────────────────────────────────────────────── */

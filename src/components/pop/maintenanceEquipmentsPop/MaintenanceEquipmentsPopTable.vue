@@ -28,7 +28,7 @@
 import { computed } from 'vue';
 import { QTableColumn, useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import {
   maintenanceEquipmentsListQuery,
@@ -53,8 +53,11 @@ const columns = computed<QTableColumn<MaintenanceEquipmentsListItem>[]>(() => [
     name: 'execution_date',
     label: t('pop.maintenanceEquipmentsPop.fields.executionDate'),
     field: (row) => {
+      if (!row.execution_date) return '-';
       try {
-        return format(new Date(row.execution_date), 'dd/MM/yyyy', { locale: ptBR });
+        const d = parse(row.execution_date, 'dd-MM-yyyy', new Date());
+        if (d.getFullYear() < 100) d.setFullYear(d.getFullYear() + 2000);
+        return format(d, 'dd/MM/yyyy', { locale: ptBR });
       } catch {
         return row.execution_date;
       }

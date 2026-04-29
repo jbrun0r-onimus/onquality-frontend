@@ -6,6 +6,7 @@ import {
   MonitoringEquipmentsListItem,
   MonitoringEquipmentsListRequest,
   MonitoringEquipmentsDetail,
+  MonitoringEquipmentsMonthlyResponse,
 } from 'src/schemas/pop/monitoringEquipments.schemas';
 import { definePaginatedQuery, defineQuery } from 'src/helpers/query.helpers';
 
@@ -22,7 +23,7 @@ function toIsoDate(ddmmyyyy: string): string {
 /** Converts from ISO datetime to DD/MM/YYYY (for filling the form) */
 function fromIsoDate(isoDate: string): string {
   try {
-    return format(new Date(isoDate), 'dd/MM/yyyy');
+    return format(parse(isoDate, 'dd-MM-yyyy', new Date()), 'dd/MM/yyyy');
   } catch {
     return isoDate;
   }
@@ -96,3 +97,13 @@ export const monitoringEquipmentDetailQuery = defineQuery(
   'monitoring-equipment-detail',
   getMonitoringEquipment
 );
+
+export async function getMonitoringEquipmentsMonthly(
+  month: number,
+  year: number
+): Promise<MonitoringEquipmentsMonthlyResponse> {
+  const response = await api.get('/onquality/monitoring_equipments/monthly', {
+    params: { month, year },
+  });
+  return response.data;
+}

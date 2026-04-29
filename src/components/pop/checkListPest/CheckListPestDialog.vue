@@ -73,6 +73,27 @@
       </div>
 
       <card-page-section v-if="props.item">
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-sm-6">
+            <signature-field
+              pop-type="check-list-pest"
+              :pop-id="props.item.id"
+              field-name="monitored_by"
+              :label="$t('pop.checkListPest.fields.monitoredBy')"
+            />
+          </div>
+          <div class="col-12 col-sm-6">
+            <signature-field
+              pop-type="check-list-pest"
+              :pop-id="props.item.id"
+              field-name="verified_by"
+              :label="$t('pop.checkListPest.fields.verifiedBy')"
+            />
+          </div>
+        </div>
+      </card-page-section>
+
+      <card-page-section v-if="props.item">
         <pop-evidence-section
           pop-type="check-list-pest"
           :pop-id="props.item?.id"
@@ -131,6 +152,7 @@ import TextField from 'src/components/form/TextField.vue';
 import AppButton from 'src/components/misc/AppButton';
 import SpinnerAndRetry from 'src/components/misc/SpinnerAndRetry.vue';
 import PopEvidenceSection from 'src/components/pop/evidence/PopEvidenceSection.vue';
+import SignatureField from 'src/components/pop/signature/SignatureField.vue';
 
 const props = defineProps<{
   item?: CheckListPestListItem;

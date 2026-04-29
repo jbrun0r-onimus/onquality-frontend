@@ -128,7 +128,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { useI18n } from 'vue-i18n';
 import { useDialogPluginComponent } from 'quasar';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
@@ -196,7 +196,11 @@ function filterDescOptions(val: string, update: (fn: () => void) => void) {
 
 function isoToDisplay(date: string | null | undefined): string {
   if (!date) return '';
-  try { return format(new Date(date), 'dd/MM/yyyy'); } catch { return date ?? ''; }
+  try {
+    const d = parse(date, 'dd-MM-yyyy', new Date());
+    if (d.getFullYear() < 100) d.setFullYear(d.getFullYear() + 2000);
+    return format(d, 'dd/MM/yyyy');
+  } catch { return date ?? ''; }
 }
 
 const { mutate, isLoading: isLoadingMutation } = useMutation(

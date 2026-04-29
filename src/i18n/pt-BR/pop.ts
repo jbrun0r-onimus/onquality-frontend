@@ -8,6 +8,8 @@ export const pop = {
     condition: 'Condição',
     createdAt: 'Criado em',
     exportPdf: 'Exportar PDF',
+    monitoredBy: 'Monitorado por',
+    verifiedBy: 'Verificado por',
     evidences: 'Evidências / Registros Fotográficos',
     addEvidences: 'Adicionar Fotos',
     takePhoto: 'Tirar Foto',
@@ -148,10 +150,18 @@ export const pop = {
   monitoringEquipments: {
     titles: {
       list: 'Frequência de Limpeza - Equipamentos',
+      monthly: 'Planilha Mensal - Equipamentos',
       details: 'Detalhes do Monitoramento',
       new: 'Novo Registro de Limpeza',
       edit: 'Editar Registro',
       delete: 'Excluir Registro',
+    },
+    monthly: {
+      selectMonth: 'Selecionar Mês/Ano',
+      exportPdf: 'Exportar PDF',
+      executedBy: 'EXECUTADO POR',
+      monitoredBy: 'MONITORADO POR',
+      verifiedBy: 'VERIFICADO POR',
     },
     fields: {
       executionDate: 'Data de Execução',
@@ -217,12 +227,21 @@ export const pop = {
       delete: 'Excluir Registro',
     },
     fields: {
+      executionDate: 'Data',
+      instructor: 'Instrutor',
+      professionalFormation: 'Formação Profissional',
+      programmaticContent: 'Conteúdo Programático',
+      workload: 'Carga Horária',
+      note: 'Observações',
       employeeName: 'Nome do Funcionário',
       isPresent: 'Presente',
     },
     misc: {
-      deleteConfirmation:
-        'Você tem certeza que deseja excluir o registro de "{name}"?',
+      deleteConfirmation: 'Você tem certeza que deseja excluir este registro de treinamento?',
+      participants: 'Participantes',
+      addParticipant: 'Adicionar Funcionário',
+      noParticipants: 'Nenhum funcionário adicionado.',
+      participantSignatures: 'Assinaturas dos Participantes',
     },
     feedback: {
       created: 'Registro criado com sucesso.',
@@ -369,10 +388,15 @@ export const pop = {
   maintenanceEquipmentsPop: {
     titles: {
       list: 'Manutenção de Equipamentos e Instrumentos',
+      monthly: 'Manutenção de Equipamentos – Mensal',
       details: 'Detalhes da Manutenção',
       new: 'Nova Manutenção',
       edit: 'Editar Manutenção',
       delete: 'Excluir Manutenção',
+    },
+    monthly: {
+      selectMonth: 'Mês/Ano',
+      exportPdf: 'Exportar PDF',
     },
     fields: {
       executionDate: 'Data',
@@ -399,10 +423,17 @@ export const pop = {
   productionProcess: {
     titles: {
       list: 'Controle de Processo Produtivo',
+      daily: 'Processo Produtivo – Diário',
       details: 'Detalhes do Processo',
       new: 'Novo Registro de Processo',
       edit: 'Editar Processo',
       delete: 'Excluir Processo',
+    },
+    daily: {
+      selectDay: 'Dia/Mês/Ano',
+      exportPdf: 'Exportar PDF',
+      monitoredBy: 'Monitorado por',
+      verifiedBy: 'Verificado por',
     },
     fields: {
       product: 'Produto',
@@ -411,6 +442,7 @@ export const pop = {
       parameter: 'Registro dos Parâmetros',
       note: 'Medidas Corretivas',
       employeeName: 'Executor',
+      correctiveAction: 'Ação Corretiva',
     },
     misc: {
       deleteConfirmation:
@@ -432,6 +464,8 @@ export const pop = {
     },
     fields: {
       note: 'Observações',
+      monitoredBy: 'Monitorado por',
+      verifiedBy: 'Verificado por',
     },
     questions: {
       q1: 'As áreas ao redor das edificações apresentam material em desuso, grama e mato não aparado?',
@@ -471,14 +505,18 @@ export const pop = {
       delete: 'Excluir Não Conformidade',
     },
     fields: {
-      product: 'Produto',
+      product: 'Produto/Fornecedor',
+      supplier: 'Fornecedor',
       address: 'Endereço',
       receivingDate: 'Data do Recebimento',
-      mapRecord: 'N° Registro Mapa',
+      mapRecord: 'N° Registro MAPA',
       details: 'Não Conformidade Detectada',
+      correctiveAction: 'Ação Corretiva',
       deadline: 'Prazo para Cumprimento',
       isApproved: 'Reaprovado?',
-      notes: 'Ação Corretiva',
+      notes: 'Observações',
+      monitoredBy: 'Monitorado por',
+      verifiedBy: 'Verificado por',
     },
     misc: {
       deleteConfirmation:
